@@ -1,0 +1,616 @@
+ Sistem A¸cıklaması
+ ¨ O˘grenci ders kayıt sisteminin t¨um kontrollerini ve kurallarını modelleyin.
+ Sistem Gereksinimleri:
+ ¨ O˘grenci giri¸si (¨o˘
+ grenci no + ¸sifre)
+ Ders listesini g¨or¨unt¨uleme (d¨ong¨u)
+ Her ders i¸cin:
+ Kontenjan kontrol¨u (ko¸sul)
+ ¨ On ko¸sul dersi kontrol¨u (ko¸sul)
+ Zaman ¸cakı¸sması kontrol¨u (ko¸sul)
+ Kredi limiti kontrol¨u (toplam ≤ 35) (ko¸sul)
+ Ders ekleme/¸cıkarma (d¨ong¨u)
+ Danı¸sman onayı gerekli mi? (GPA ¡ 2.5 ise) (ko¸sul)
+ Kayıt ¨ozeti g¨osterme ve kayıt onaylama
+Elbette! İşte Öğrenci Ders Kayıt Sistemi için tüm kontrolleri ve kuralları içeren pseudocode:
+BAŞLA
+
+    // Öğrenci Girişi
+    YAZ "Öğrenci No giriniz:"
+    OKU ogrenci_no
+    YAZ "Şifre giriniz:"
+    OKU sifre
+
+    EĞER ogrenci_dogrula(ogrenci_no, sifre) DEĞİLSE
+        YAZ "Giriş başarısız."
+        DUR
+    SON
+
+    toplam_kredi ← 0
+    secilen_dersler ← boş liste
+
+    DÖNGÜ
+        ders_listesi ← dersleri_getir()
+        YAZ "Mevcut Dersler:"
+        YAZ ders_listesi
+
+        YAZ "Bir ders seçiniz veya çıkmak için 'Ç' giriniz:"
+        OKU ders_secimi
+
+        EĞER ders_secimi = "Ç" VEYA ders_secimi = "ç" İSE
+            KAYIT_OZETI_GOSTER(secilen_dersler, toplam_kredi)
+            YAZ "Kaydı onaylıyor musunuz? (E/H)"
+            OKU onay
+            EĞER onay = "E" VEYA onay = "e" İSE
+                YAZ "Kayıt başarıyla tamamlandı."
+            DEĞİLSE
+                YAZ "Kayıt iptal edildi."
+            SON
+            DUR
+        SON
+
+        ders ← ders_bilgisi_getir(ders_secimi)
+
+        // Kontenjan kontrolü
+        EĞER ders.kontenjan_doldu_mu() İSE
+            YAZ "Dersin kontenjanı dolu."
+            DEVAM ET
+        SON
+
+        // Ön koşul kontrolü
+        EĞER NOT_ONKOŞUL_DERSLERİ_BASARILI_MI(ogrenci_no, ders.onkosul_dersler) DEĞİLSE
+            YAZ "Ön koşul dersleri tamamlanmamış."
+            DEVAM ET
+        SON
+
+        // Zaman çakışması kontrolü
+        EĞER zaman_cakisiyor_mu(secilen_dersler, ders) İSE
+            YAZ "Dersin zamanında çakışma var."
+            DEVAM ET
+        SON
+
+        // Kredi limiti kontrolü
+        EĞER toplam_kredi + ders.kredi > 35 İSE
+            YAZ "Kredi limiti aşılıyor."
+            DEVAM ET
+        SON
+
+        // Danışman onayı kontrolü (GPA < 2.5 ise gerekli)
+        gpa ← ogrenci_gpa_getir(ogrenci_no)
+        EĞER gpa < 2.5 İSE
+            YAZ "Danışman onayı gerekiyor. Onay alındı mı? (E/H)"
+            OKU onay
+            EĞER onay ≠ "E" VEYA onay ≠ "e" İSE
+                YAZ "Danışman onayı alınmadı."
+                DEVAM ET
+            SON
+        SON
+
+        // Ders ekleme
+        secilen_dersler.ekle(ders)
+        toplam_kredi ← toplam_kredi + ders.kredi
+        YAZ "Ders eklendi: ", ders.adi
+        YAZ "Toplam kredi: ", toplam_kredi
+
+        // Ders çıkarma seçeneği
+        YAZ "Ders çıkarma yapmak ister misiniz? (E/H)"
+        OKU cevap
+        EĞER cevap = "E" VEYA cevap = "e" İSE
+            YAZ "Çıkarmak istediğiniz dersi seçiniz:"
+            OKU ders_cikar
+            EĞER ders_cikar mevcut ise secilen_dersler İSE
+                secilen_dersler.cikar(ders_cikar)
+                toplam_kredi ← toplam_kredi - ders_cikar.kredi
+                YAZ "Ders çıkarıldı: ", ders_cikar.adi
+                YAZ "Toplam kredi: ", toplam_kredi
+            DEĞİLSE
+                YAZ "Seçilen ders kayıtlı değil."
+            SON
+        SON
+
+    SONDÖNGÜ
+
+BİTİR
+
+Bu pseudocode:
+
+Öğrenci girişi ve doğrulaması ile başlar.
+
+Ders listesi gösterilir ve öğrenci istediği dersleri seçer.
+
+Her ders için kontenjan, ön koşul, zaman çakışması ve kredi limiti kontrolleri yapılır.
+
+GPA düşükse danışman onayı sorulur.
+
+Ders ekleme ve çıkarma işlemleri döngü içinde devam eder.
+
+Öğrenci istediğinde kayıt özeti gösterilir ve onaylanır.
+
+İstersen bu kodu DOT formatına da çevirebilirim!
+1. Genel Yapı “¨ Universite ders kayıt sisteminin genel akı¸sını a¸cıkla: giri¸s, ders listesi, ders se¸cimi, kontroller, onaylama.”
+
+Tabii! İşte üniversite ders kayıt sisteminin genel akışının kısa özeti:
+
+1. **Giriş:** Öğrenci numarası ve şifre ile sisteme giriş yapılır.
+2. **Ders Listesi:** Sistemde mevcut tüm dersler listelenir.
+3. **Ders Seçimi:** Öğrenci istediği dersleri seçer.
+4. **Kontroller:** Seçilen dersler için kontenjan, ön koşul, zaman çakışması, kredi limiti ve danışman onayı gibi kontroller yapılır.
+5. **Onaylama:** Tüm kontroller başarılı ise öğrenci kayıt özetini görür ve kayıt işlemini onaylar.
+
+Bu adımlar, öğrencinin derslerini doğru ve kurallara uygun şekilde kaydetmesini sağlar.
+ 2. Kontrol Mekanizmaları
+ “Ders kaydında yapılması gereken kontrolleri listele: kontenjan, ¨on ko¸sul,
+ zaman ¸cakı¸sması, kredi limiti, danı¸sman onayı.”
+Tabii! İşte ders kaydında yapılması gereken temel kontroller:
+
+1. **Kontenjan Kontrolü:** Dersin kapasitesi dolmamış olmalı.
+2. **Ön Koşul Kontrolü:** Ders için gerekli ön koşul dersleri başarıyla tamamlanmış olmalı.
+3. **Zaman Çakışması Kontrolü:** Seçilen derslerin saatleri arasında çakışma olmamalı.
+4. **Kredi Limiti Kontrolü:** Öğrencinin toplam kredi yükü belirlenen sınırı (örneğin 35 kredi) aşmamalı.
+5. **Danışman Onayı Kontrolü:** GPA düşükse (örneğin 2.5’in altında) ders kaydı için danışman onayı alınmalı.
+
+Bu kontroller ders kaydının doğru ve sistem kurallarına uygun olmasını sağlar.
+ 3. Pseudocode Olu¸sturma
+ “T¨um bu kontrollerle birlikte detaylı pseudocode yaz. ˙ I¸c i¸ce E˘ GER-˙ ISE
+ yapıları ve d¨ong¨uler kullan.
+Tabii! İşte üniversite ders kayıt sistemi için tüm kontrolleri içeren, iç içe EĞER-İSE yapıları ve döngülerle yazılmış detaylı pseudocode:
+BAŞLA
+
+    // Öğrenci Girişi
+    YAZ "Öğrenci No giriniz:"
+    OKU ogrenci_no
+    YAZ "Şifre giriniz:"
+    OKU sifre
+
+    EĞER ogrenci_dogrula(ogrenci_no, sifre) DEĞİLSE
+        YAZ "Giriş başarısız."
+        DUR
+    SON
+
+    toplam_kredi ← 0
+    secilen_dersler ← boş liste
+
+    DÖNGÜ
+        ders_listesi ← dersleri_getir()
+        YAZ "Mevcut Dersler:"
+        YAZ ders_listesi
+
+        YAZ "Bir ders seçiniz veya çıkmak için 'Ç' giriniz:"
+        OKU ders_secimi
+
+        EĞER ders_secimi = "Ç" VEYA ders_secimi = "ç" İSE
+            YAZ "Kayıt özeti:"
+            YAZ secilen_dersler
+            YAZ "Toplam kredi: ", toplam_kredi
+            YAZ "Kaydı onaylıyor musunuz? (E/H)"
+            OKU onay
+            EĞER onay = "E" VEYA onay = "e" İSE
+                YAZ "Kayıt başarıyla tamamlandı."
+            DEĞİLSE
+                YAZ "Kayıt iptal edildi."
+            SON
+            DUR
+        SON
+
+        ders ← ders_bilgisi_getir(ders_secimi)
+
+        // Kontenjan kontrolü
+        EĞER ders.kontenjan_doldu_mu() İSE
+            YAZ "Dersin kontenjanı dolu."
+            DEVAM ET
+        SON
+
+        // Ön koşul kontrolü
+        EĞER NOT_ONKOŞUL_DERSLERİ_BASARILI_MI(ogrenci_no, ders.onkosul_dersler) DEĞİLSE
+            YAZ "Ön koşul dersleri tamamlanmamış."
+            DEVAM ET
+        SON
+
+        // Zaman çakışması kontrolü
+        EĞER zaman_cakisiyor_mu(secilen_dersler, ders) İSE
+            YAZ "Dersin zamanında çakışma var."
+            DEVAM ET
+        SON
+
+        // Kredi limiti kontrolü
+        EĞER toplam_kredi + ders.kredi > 35 İSE
+            YAZ "Kredi limiti aşılıyor."
+            DEVAM ET
+        SON
+
+        // Danışman onayı kontrolü (GPA < 2.5 ise)
+        gpa ← ogrenci_gpa_getir(ogrenci_no)
+        EĞER gpa < 2.5 İSE
+            YAZ "Danışman onayı gerekiyor. Onay alındı mı? (E/H)"
+            OKU onay
+            EĞER onay ≠ "E" VEYA onay ≠ "e" İSE
+                YAZ "Danışman onayı alınmadı."
+                DEVAM ET
+            SON
+        SON
+
+        // Ders ekleme
+        secilen_dersler.ekle(ders)
+        toplam_kredi ← toplam_kredi + ders.kredi
+        YAZ "Ders eklendi: ", ders.adi
+        YAZ "Toplam kredi: ", toplam_kredi
+
+        // Ders çıkarma seçeneği
+        YAZ "Ders çıkarma yapmak ister misiniz? (E/H)"
+        OKU cevap
+        EĞER cevap = "E" VEYA cevap = "e" İSE
+            YAZ "Çıkarmak istediğiniz dersi seçiniz:"
+            OKU ders_cikar
+            EĞER ders_cikar mevcut ise secilen_dersler İSE
+                secilen_dersler.cikar(ders_cikar)
+                toplam_kredi ← toplam_kredi - ders_cikar.kredi
+                YAZ "Ders çıkarıldı: ", ders_cikar.adi
+                YAZ "Toplam kredi: ", toplam_kredi
+            DEĞİLSE
+                YAZ "Seçilen ders kayıtlı değil."
+            SON
+        SON
+
+    SONDÖNGÜ
+
+BİTİR
+Tabii! İşte üniversite ders kayıt sistemi için tüm kontrolleri içeren, iç içe EĞER-İSE yapıları ve döngülerle yazılmış detaylı pseudocode:
+
+```plaintext
+BAŞLA
+
+    // Öğrenci Girişi
+    YAZ "Öğrenci No giriniz:"
+    OKU ogrenci_no
+    YAZ "Şifre giriniz:"
+    OKU sifre
+
+    EĞER ogrenci_dogrula(ogrenci_no, sifre) DEĞİLSE
+        YAZ "Giriş başarısız."
+        DUR
+    SON
+
+    toplam_kredi ← 0
+    secilen_dersler ← boş liste
+
+    DÖNGÜ
+        ders_listesi ← dersleri_getir()
+        YAZ "Mevcut Dersler:"
+        YAZ ders_listesi
+
+        YAZ "Bir ders seçiniz veya çıkmak için 'Ç' giriniz:"
+        OKU ders_secimi
+
+        EĞER ders_secimi = "Ç" VEYA ders_secimi = "ç" İSE
+            YAZ "Kayıt özeti:"
+            YAZ secilen_dersler
+            YAZ "Toplam kredi: ", toplam_kredi
+            YAZ "Kaydı onaylıyor musunuz? (E/H)"
+            OKU onay
+            EĞER onay = "E" VEYA onay = "e" İSE
+                YAZ "Kayıt başarıyla tamamlandı."
+            DEĞİLSE
+                YAZ "Kayıt iptal edildi."
+            SON
+            DUR
+        SON
+
+        ders ← ders_bilgisi_getir(ders_secimi)
+
+        // Kontenjan kontrolü
+        EĞER ders.kontenjan_doldu_mu() İSE
+            YAZ "Dersin kontenjanı dolu."
+            DEVAM ET
+        SON
+
+        // Ön koşul kontrolü
+        EĞER NOT_ONKOŞUL_DERSLERİ_BASARILI_MI(ogrenci_no, ders.onkosul_dersler) DEĞİLSE
+            YAZ "Ön koşul dersleri tamamlanmamış."
+            DEVAM ET
+        SON
+
+        // Zaman çakışması kontrolü
+        EĞER zaman_cakisiyor_mu(secilen_dersler, ders) İSE
+            YAZ "Dersin zamanında çakışma var."
+            DEVAM ET
+        SON
+
+        // Kredi limiti kontrolü
+        EĞER toplam_kredi + ders.kredi > 35 İSE
+            YAZ "Kredi limiti aşılıyor."
+            DEVAM ET
+        SON
+
+        // Danışman onayı kontrolü (GPA < 2.5 ise)
+        gpa ← ogrenci_gpa_getir(ogrenci_no)
+        EĞER gpa < 2.5 İSE
+            YAZ "Danışman onayı gerekiyor. Onay alındı mı? (E/H)"
+            OKU onay
+            EĞER onay ≠ "E" VEYA onay ≠ "e" İSE
+                YAZ "Danışman onayı alınmadı."
+                DEVAM ET
+            SON
+        SON
+
+        // Ders ekleme
+        secilen_dersler.ekle(ders)
+        toplam_kredi ← toplam_kredi + ders.kredi
+        YAZ "Ders eklendi: ", ders.adi
+        YAZ "Toplam kredi: ", toplam_kredi
+
+        // Ders çıkarma seçeneği
+        YAZ "Ders çıkarma yapmak ister misiniz? (E/H)"
+        OKU cevap
+        EĞER cevap = "E" VEYA cevap = "e" İSE
+            YAZ "Çıkarmak istediğiniz dersi seçiniz:"
+            OKU ders_cikar
+            EĞER ders_cikar mevcut ise secilen_dersler İSE
+                secilen_dersler.cikar(ders_cikar)
+                toplam_kredi ← toplam_kredi - ders_cikar.kredi
+                YAZ "Ders çıkarıldı: ", ders_cikar.adi
+                YAZ "Toplam kredi: ", toplam_kredi
+            DEĞİLSE
+                YAZ "Seçilen ders kayıtlı değil."
+            SON
+        SON
+
+    SONDÖNGÜ
+
+BİTİR
+```
+
+---
+
+Bu pseudocode:
+
+* Öncelikle öğrenci girişi yapılır.
+* Ders listesi gösterilir ve döngü ile ders seçimi sağlanır.
+* Her seçimde kontenjan, ön koşul, zaman çakışması, kredi limiti ve danışman onayı kontrolleri yapılır.
+* Ders ekleme ve çıkarma seçenekleri verilir.
+* Öğrenci kayıt özeti görüp onaylayana kadar döngü devam eder.
+
+Başka bir şey istersen yardımcı olabilirim!
+4. DOT D¨on¨u¸s¨um¨u “Bu pseudocode’u Graphviz DOT diline ¸cevir. Her kontrol noktasını diamond ile g¨oster.”
+Tabii! İşte verdiğin pseudocode’un Graphviz DOT diline çevrilmiş hali. Kontrol noktaları diamond (romb) şekliyle gösterildi, diğer adımlar ise kutu şeklinde.
+digraph DersKayitSistemi {
+    rankdir=TB;
+    node [shape=box];
+
+    // Başlangıç
+    Basla [label="BAŞLA"];
+
+    // Giriş
+    GirisNo [label="Öğrenci No gir"];
+    GirisSifre [label="Şifre gir"];
+    Dogrula [label="Öğrenci doğrulama"];
+    DogrulaShape [shape=diamond];
+    
+    GirisBasarili [label="Giriş başarılı"];
+    GirisBasarisiz [label="Giriş başarısız"];
+
+    // Döngü başı
+    DersListesi [label="Ders listesi göster"];
+    DersSecim [label="Ders seç veya Ç çıkış"];
+    
+    CikisKontrol [label="Çıkmak istiyor musun?"];
+    CikisKontrolShape [shape=diamond];
+    
+    KayitOzeti [label="Kayıt özeti göster"];
+    KayitOnay [label="Kayıt onayla?"];
+    KayitOnayShape [shape=diamond];
+    KayitBasarili [label="Kayıt tamamlandı"];
+    KayitIptal [label="Kayıt iptal"];
+
+    // Ders bilgisi ve kontroller
+    DersBilgi [label="Seçilen ders bilgisi al"];
+    
+    KontenjanKontrol [label="Kontenjan dolu mu?"];
+    KontenjanKontrolShape [shape=diamond];
+    OnKosulKontrol [label="Ön koşullar tamam mı?"];
+    OnKosulKontrolShape [shape=diamond];
+    ZamanCakismaKontrol [label="Zaman çakışması var mı?"];
+    ZamanCakismaKontrolShape [shape=diamond];
+    KrediLimitKontrol [label="Kredi limiti aşılır mı?"];
+    KrediLimitKontrolShape [shape=diamond];
+    DanismanOnayKontrol [label="Danışman onayı gerekli mi?"];
+    DanismanOnayKontrolShape [shape=diamond];
+    DanismanOnayAlindi [label="Danışman onayı alındı?"];
+    DanismanOnayAlindiShape [shape=diamond];
+
+    DersEkle [label="Ders ekle ve kredi güncelle"];
+    DersCikarSoru [label="Ders çıkarma yap?"];
+    DersCikarSoruShape [shape=diamond];
+    DersCikarSecim [label="Çıkarılacak dersi seç"];
+    DersCikarYap [label="Ders çıkar ve kredi güncelle"];
+    DersCikarYok [label="Seçilen ders yok"];
+
+    // Döngüye dön
+    DonguDevam [label="Derse dön"];
+
+    // Bitiş
+    Bitir [label="BİTİR", shape=oval];
+
+    // Kenar bağlantıları
+    Basla -> GirisNo;
+    GirisNo -> GirisSifre;
+    GirisSifre -> DogrulaShape;
+    DogrulaShape -> GirisBasarili [label="EVET"];
+    DogrulaShape -> GirisBasarisiz [label="HAYIR"];
+    GirisBasarisiz -> Bitir;
+
+    GirisBasarili -> DersListesi;
+    DersListesi -> DersSecim;
+    DersSecim -> CikisKontrolShape;
+    CikisKontrolShape -> KayitOzeti [label="EVET"];
+    CikisKontrolShape -> DersBilgi [label="HAYIR"];
+
+    KayitOzeti -> KayitOnayShape;
+    KayitOnayShape -> KayitBasarili [label="EVET"];
+    KayitOnayShape -> KayitIptal [label="HAYIR"];
+    KayitBasarili -> Bitir;
+    KayitIptal -> DersListesi;
+
+    DersBilgi -> KontenjanKontrolShape;
+
+    KontenjanKontrolShape -> DersEkle [label="HAYIR"];
+    KontenjanKontrolShape -> DersListesi [label="EVET"];
+
+    DersEkle -> OnKosulKontrolShape;
+    OnKosulKontrolShape -> DersListesi [label="HAYIR"];
+    OnKosulKontrolShape -> ZamanCakismaKontrolShape [label="EVET"];
+
+    ZamanCakismaKontrolShape -> DersListesi [label="EVET"];
+    ZamanCakismaKontrolShape -> KrediLimitKontrolShape [label="HAYIR"];
+
+    KrediLimitKontrolShape -> DersListesi [label="EVET"];
+    KrediLimitKontrolShape -> DanismanOnayKontrolShape [label="HAYIR"];
+
+    DanismanOnayKontrolShape -> DonguDevam [label="HAYIR"];
+    DanismanOnayKontrolShape -> DanismanOnayAlindiShape [label="EVET"];
+
+    DanismanOnayAlindiShape -> DersListesi [label="EVET"];
+    DanismanOnayAlindiShape -> DersListesi [label="HAYIR"];
+
+    DonguDevam -> DersCikarSoruShape;
+
+    DersCikarSoruShape -> DersCikarSecim [label="EVET"];
+    DersCikarSoruShape -> DersListesi [label="HAYIR"];
+
+    DersCikarSecim -> DersCikarYap;
+    DersCikarYap -> DersListesi;
+
+    DersCikarSecim -> DersCikarYok;
+
+    DersCikarYok -> DersListesi;
+}
+Tabii! İşte verdiğin pseudocode’un Graphviz DOT diline çevrilmiş hali. Kontrol noktaları **diamond** (romb) şekliyle gösterildi, diğer adımlar ise kutu şeklinde.
+
+```dot
+digraph DersKayitSistemi {
+    rankdir=TB;
+    node [shape=box];
+
+    // Başlangıç
+    Basla [label="BAŞLA"];
+
+    // Giriş
+    GirisNo [label="Öğrenci No gir"];
+    GirisSifre [label="Şifre gir"];
+    Dogrula [label="Öğrenci doğrulama"];
+    DogrulaShape [shape=diamond];
+    
+    GirisBasarili [label="Giriş başarılı"];
+    GirisBasarisiz [label="Giriş başarısız"];
+
+    // Döngü başı
+    DersListesi [label="Ders listesi göster"];
+    DersSecim [label="Ders seç veya Ç çıkış"];
+    
+    CikisKontrol [label="Çıkmak istiyor musun?"];
+    CikisKontrolShape [shape=diamond];
+    
+    KayitOzeti [label="Kayıt özeti göster"];
+    KayitOnay [label="Kayıt onayla?"];
+    KayitOnayShape [shape=diamond];
+    KayitBasarili [label="Kayıt tamamlandı"];
+    KayitIptal [label="Kayıt iptal"];
+
+    // Ders bilgisi ve kontroller
+    DersBilgi [label="Seçilen ders bilgisi al"];
+    
+    KontenjanKontrol [label="Kontenjan dolu mu?"];
+    KontenjanKontrolShape [shape=diamond];
+    OnKosulKontrol [label="Ön koşullar tamam mı?"];
+    OnKosulKontrolShape [shape=diamond];
+    ZamanCakismaKontrol [label="Zaman çakışması var mı?"];
+    ZamanCakismaKontrolShape [shape=diamond];
+    KrediLimitKontrol [label="Kredi limiti aşılır mı?"];
+    KrediLimitKontrolShape [shape=diamond];
+    DanismanOnayKontrol [label="Danışman onayı gerekli mi?"];
+    DanismanOnayKontrolShape [shape=diamond];
+    DanismanOnayAlindi [label="Danışman onayı alındı?"];
+    DanismanOnayAlindiShape [shape=diamond];
+
+    DersEkle [label="Ders ekle ve kredi güncelle"];
+    DersCikarSoru [label="Ders çıkarma yap?"];
+    DersCikarSoruShape [shape=diamond];
+    DersCikarSecim [label="Çıkarılacak dersi seç"];
+    DersCikarYap [label="Ders çıkar ve kredi güncelle"];
+    DersCikarYok [label="Seçilen ders yok"];
+
+    // Döngüye dön
+    DonguDevam [label="Derse dön"];
+
+    // Bitiş
+    Bitir [label="BİTİR", shape=oval];
+
+    // Kenar bağlantıları
+    Basla -> GirisNo;
+    GirisNo -> GirisSifre;
+    GirisSifre -> DogrulaShape;
+    DogrulaShape -> GirisBasarili [label="EVET"];
+    DogrulaShape -> GirisBasarisiz [label="HAYIR"];
+    GirisBasarisiz -> Bitir;
+
+    GirisBasarili -> DersListesi;
+    DersListesi -> DersSecim;
+    DersSecim -> CikisKontrolShape;
+    CikisKontrolShape -> KayitOzeti [label="EVET"];
+    CikisKontrolShape -> DersBilgi [label="HAYIR"];
+
+    KayitOzeti -> KayitOnayShape;
+    KayitOnayShape -> KayitBasarili [label="EVET"];
+    KayitOnayShape -> KayitIptal [label="HAYIR"];
+    KayitBasarili -> Bitir;
+    KayitIptal -> DersListesi;
+
+    DersBilgi -> KontenjanKontrolShape;
+
+    KontenjanKontrolShape -> DersEkle [label="HAYIR"];
+    KontenjanKontrolShape -> DersListesi [label="EVET"];
+
+    DersEkle -> OnKosulKontrolShape;
+    OnKosulKontrolShape -> DersListesi [label="HAYIR"];
+    OnKosulKontrolShape -> ZamanCakismaKontrolShape [label="EVET"];
+
+    ZamanCakismaKontrolShape -> DersListesi [label="EVET"];
+    ZamanCakismaKontrolShape -> KrediLimitKontrolShape [label="HAYIR"];
+
+    KrediLimitKontrolShape -> DersListesi [label="EVET"];
+    KrediLimitKontrolShape -> DanismanOnayKontrolShape [label="HAYIR"];
+
+    DanismanOnayKontrolShape -> DonguDevam [label="HAYIR"];
+    DanismanOnayKontrolShape -> DanismanOnayAlindiShape [label="EVET"];
+
+    DanismanOnayAlindiShape -> DersListesi [label="EVET"];
+    DanismanOnayAlindiShape -> DersListesi [label="HAYIR"];
+
+    DonguDevam -> DersCikarSoruShape;
+
+    DersCikarSoruShape -> DersCikarSecim [label="EVET"];
+    DersCikarSoruShape -> DersListesi [label="HAYIR"];
+
+    DersCikarSecim -> DersCikarYap;
+    DersCikarYap -> DersListesi;
+
+    DersCikarSecim -> DersCikarYok;
+
+    DersCikarYok -> DersListesi;
+}
+```
+
+---
+
+Bu grafik:
+
+* Başlangıçtan giriş doğrulamaya,
+* Ardından ders seçimine ve kontrollerin her birine,
+* Kontrol sonuçlarına göre farklı yönlendirmelere,
+* Ders ekleme ve çıkarma adımlarına,
+* Ve en sonunda kayıt onayına ve bitişe kadar tüm akışı gösteriyor.
+
+İstersen bunu Graphviz araçlarıyla görselleştirebilirsin. Yardımcı olayım mı başka?
+bana bu sistemi 5-6 satırda kısaca açıklar mısın
+Tabii! İşte sistemin kısa özeti:
+
+Öğrenci sisteme öğrenci numarası ve şifresiyle giriş yapar. Sistemde mevcut dersler listelenir ve öğrenci istediği dersleri seçer. Her ders için kontenjan, ön koşul, zaman çakışması, kredi limiti ve danışman onayı kontrolleri yapılır. Kontrollerden geçen dersler seçilen dersler listesine eklenir. Öğrenci istediğinde ders çıkarabilir ve kayıt özetini onaylayarak işlemi tamamlar. Sistem, öğrencinin kurallara uygun ve doğru şekilde ders kaydı yapmasını sağlar.
