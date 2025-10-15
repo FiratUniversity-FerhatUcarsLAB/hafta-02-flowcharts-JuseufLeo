@@ -1,0 +1,486 @@
+ Sistem A¸cıklaması
+ IoT tabanlı akıllı ev g¨uvenlik sisteminin alarm ve bildirim s¨ure¸clerini
+ modelleyin.
+ Sistem Gereksinimleri:
+ Sistem aktif mi kontrol¨u (ko¸sul)
+ Sens¨or okuma d¨ong¨us¨u (d¨ong¨u- s¨urekli)
+ Hareket sens¨or¨u kontrol¨u (ko¸sul)
+ Kapı/pencere sens¨or¨u kontrol¨u (ko¸sul)
+ Kamera aktivasyonu (ko¸sul)
+ Yanlı¸s alarm kontrol¨u (ev sahibi evde mi?) (ko¸sul)
+ Alarm seviyesi belirleme (1-d¨u¸s¨uk, 2-orta, 3-y¨uksek) (ko¸sul)
+ Bildirim g¨onderme (SMS + App + Email)
+ Bekle ve tekrar kontrol et (d¨ong¨u)
+ Alarm sıfırlama veya devam ettirme (ko¸sul)
+Elbette! Sana IoT tabanlı akıllı ev güvenlik sisteminin alarm ve bildirim süreçlerini modelleyecek şekilde genel bir akış/davranış modeli çıkarabilirim. Bunu adım adım sistem gereksinimlerine uygun olarak yazalım.
+IoT Akıllı Ev Güvenlik Sistemi Alarm ve Bildirim Süreci Modeli
+
+Başlangıç:
+
+Sistem aktif mi kontrolü?
+
+Eğer sistem aktif değilse: döngü bekle, tekrar kontrol et.
+
+Sistem aktifse: sensör okuma döngüsüne geç.
+
+Sensör okuma döngüsü (Sürekli döngü):
+
+Hareket sensöründen veri oku.
+
+Kapı/pencere sensöründen veri oku.
+
+Hareket sensörü kontrolü:
+
+Hareket algılandı mı?
+
+Hayır: Kapı/pencere sensörüne geç.
+
+Evet: Kamera aktivasyonu kontrolü.
+
+Kapı/pencere sensörü kontrolü:
+
+Kapı/pencere açıldı mı?
+
+Hayır: Bekle ve tekrar kontrol et.
+
+Evet: Kamera aktivasyonu kontrolü.
+
+Kamera aktivasyonu:
+
+Sistem ayarlarına göre kamera açılmalı mı?
+
+Evet: Kamerayı aktive et ve kayıt başlat.
+
+Hayır: Kamera açma.
+
+Yanlış alarm kontrolü (Ev sahibi evde mi?):
+
+Ev sahibi evde mi?
+
+Evet: Yanlış alarm, alarmı sıfırla.
+
+Hayır: Alarm seviyesi belirle.
+
+Alarm seviyesi belirleme:
+
+Algılanan durumun tehlike seviyesine göre alarm seviyesi seç (1-düşük, 2-orta, 3-yüksek).
+
+Bildirim gönderme:
+
+Alarm seviyesi doğrultusunda SMS, mobil uygulama ve e-posta bildirimleri gönder.
+
+Bekle ve tekrar kontrol et:
+
+Kısa süre bekle (örneğin 10 saniye), tekrar sensör okumalarına dön.
+
+Alarm sıfırlama veya devam ettirme:
+
+Kullanıcı tarafından alarm sıfırlanırsa: alarm durdur, sistem normal modda devam et.
+
+Alarm devam ederse: bildirim gönderme ve alarm durumunu sürdür.
+Bu akışın pseudocode örneği:
+while True:
+    if not system_active():
+        wait()
+        continue
+
+    motion_detected = check_motion_sensor()
+    door_window_open = check_door_window_sensor()
+
+    if motion_detected or door_window_open:
+        if should_activate_camera():
+            activate_camera()
+
+        if homeowner_present():
+            reset_alarm()
+            continue
+
+        alarm_level = determine_alarm_level(motion_detected, door_window_open)
+        send_notifications(alarm_level)
+
+        while alarm_active():
+            if user_resets_alarm():
+                reset_alarm()
+                break
+            wait()
+    else:
+        wait()
+Elbette! Sana IoT tabanlı akıllı ev güvenlik sisteminin alarm ve bildirim süreçlerini modelleyecek şekilde genel bir akış/davranış modeli çıkarabilirim. Bunu adım adım sistem gereksinimlerine uygun olarak yazalım.
+
+---
+
+### IoT Akıllı Ev Güvenlik Sistemi Alarm ve Bildirim Süreci Modeli
+
+**Başlangıç:**
+
+1. **Sistem aktif mi kontrolü?**
+
+   * Eğer sistem aktif değilse: döngü bekle, tekrar kontrol et.
+   * Sistem aktifse: sensör okuma döngüsüne geç.
+
+2. **Sensör okuma döngüsü (Sürekli döngü):**
+
+   * Hareket sensöründen veri oku.
+   * Kapı/pencere sensöründen veri oku.
+
+3. **Hareket sensörü kontrolü:**
+
+   * Hareket algılandı mı?
+
+     * Hayır: Kapı/pencere sensörüne geç.
+     * Evet: Kamera aktivasyonu kontrolü.
+
+4. **Kapı/pencere sensörü kontrolü:**
+
+   * Kapı/pencere açıldı mı?
+
+     * Hayır: Bekle ve tekrar kontrol et.
+     * Evet: Kamera aktivasyonu kontrolü.
+
+5. **Kamera aktivasyonu:**
+
+   * Sistem ayarlarına göre kamera açılmalı mı?
+
+     * Evet: Kamerayı aktive et ve kayıt başlat.
+     * Hayır: Kamera açma.
+
+6. **Yanlış alarm kontrolü (Ev sahibi evde mi?):**
+
+   * Ev sahibi evde mi?
+
+     * Evet: Yanlış alarm, alarmı sıfırla.
+     * Hayır: Alarm seviyesi belirle.
+
+7. **Alarm seviyesi belirleme:**
+
+   * Algılanan durumun tehlike seviyesine göre alarm seviyesi seç (1-düşük, 2-orta, 3-yüksek).
+
+8. **Bildirim gönderme:**
+
+   * Alarm seviyesi doğrultusunda SMS, mobil uygulama ve e-posta bildirimleri gönder.
+
+9. **Bekle ve tekrar kontrol et:**
+
+   * Kısa süre bekle (örneğin 10 saniye), tekrar sensör okumalarına dön.
+
+10. **Alarm sıfırlama veya devam ettirme:**
+
+    * Kullanıcı tarafından alarm sıfırlanırsa: alarm durdur, sistem normal modda devam et.
+    * Alarm devam ederse: bildirim gönderme ve alarm durumunu sürdür.
+
+---
+
+### Bu akışın pseudocode örneği:
+
+```python
+while True:
+    if not system_active():
+        wait()
+        continue
+
+    motion_detected = check_motion_sensor()
+    door_window_open = check_door_window_sensor()
+
+    if motion_detected or door_window_open:
+        if should_activate_camera():
+            activate_camera()
+
+        if homeowner_present():
+            reset_alarm()
+            continue
+
+        alarm_level = determine_alarm_level(motion_detected, door_window_open)
+        send_notifications(alarm_level)
+
+        while alarm_active():
+            if user_resets_alarm():
+                reset_alarm()
+                break
+            wait()
+    else:
+        wait()
+```
+
+---
+
+Dilersen bu modeli akış diyagramı, UML diyagramı veya başka bir formatta da detaylandırabiliriz. Nasıl devam etmek istersin?
+Sonsuz D¨ong¨u Yakla¸sımı
+ “Akıllı ev g¨uvenlik sistemi 7/24 ¸calı¸sır. Ana d¨ong¨u i¸cinde sens¨or okuma,
+ tehdit algılama, alarm verme ve bildirim g¨onderme s¨ure¸clerini i¸ceren
+ pseudocode yaz.”
+ ¨ Ozel Notlar:
+ Ana D¨ ONG¨ U s¨urekli ¸calı¸sır (DO˘ GRU ko¸sulu ile)
+ Her d¨ong¨u iterasyonunda t¨um sens¨orler kontrol edilir
+ Tehdit seviyesine g¨ore farklı aksiyonlar alınır
+ Alarm sıfırlama komutu gelene kadar devam eder
+Tabii! İşte sonsuz döngü yaklaşımıyla IoT tabanlı akıllı ev güvenlik sistemi için sensör okuma, tehdit algılama, alarm verme ve bildirim gönderme süreçlerini içeren örnek bir pseudocode:
+# Sistem sonsuz döngüde çalışır
+while True:  # DOĞRU koşulu ile sonsuz döngü
+
+    # 1. Tüm sensörleri oku
+    hareket_var = hareket_sensor_okuma()
+    kapi_pencere_acik = kapi_pencere_sensor_okuma()
+    
+    # 2. Tehdit durumu kontrolü
+    if hareket_var or kapi_pencere_acik:
+        
+        # Kamera aktivasyonu kontrolü (isteğe bağlı)
+        if kamera_aktif_mi():
+            kamera_aktivasyonu_yap()
+        
+        # Yanlış alarm kontrolü (ev sahibi evde mi?)
+        if ev_sahibi_evde_mi():
+            alarm_sifirla()
+            continue  # Döngü başına dön
+        
+        # 3. Alarm seviyesi belirle
+        if hareket_var and kapi_pencere_acik:
+            alarm_seviyesi = 3  # Yüksek alarm
+        elif hareket_var or kapi_pencere_acik:
+            alarm_seviyesi = 2  # Orta alarm
+        else:
+            alarm_seviyesi = 1  # Düşük alarm (gerekirse)
+        
+        # 4. Alarmı aktif et ve bildirim gönder
+        alarm_ac(alarm_seviyesi)
+        bildirim_gonder(alarm_seviyesi)
+        
+        # 5. Alarm sıfırlanana kadar döngüyü devam ettir
+        while not alarm_sifirlama_komutu_geldi():
+            bekle_bir_sure()
+        
+        alarm_sifirla()
+    
+    else:
+        # Tehdit yok, bekle ve sensörleri tekrar oku
+        bekle_bir_sure()
+Tabii! İşte **sonsuz döngü yaklaşımıyla** IoT tabanlı akıllı ev güvenlik sistemi için sensör okuma, tehdit algılama, alarm verme ve bildirim gönderme süreçlerini içeren örnek bir pseudocode:
+
+```python
+# Sistem sonsuz döngüde çalışır
+while True:  # DOĞRU koşulu ile sonsuz döngü
+
+    # 1. Tüm sensörleri oku
+    hareket_var = hareket_sensor_okuma()
+    kapi_pencere_acik = kapi_pencere_sensor_okuma()
+    
+    # 2. Tehdit durumu kontrolü
+    if hareket_var or kapi_pencere_acik:
+        
+        # Kamera aktivasyonu kontrolü (isteğe bağlı)
+        if kamera_aktif_mi():
+            kamera_aktivasyonu_yap()
+        
+        # Yanlış alarm kontrolü (ev sahibi evde mi?)
+        if ev_sahibi_evde_mi():
+            alarm_sifirla()
+            continue  # Döngü başına dön
+        
+        # 3. Alarm seviyesi belirle
+        if hareket_var and kapi_pencere_acik:
+            alarm_seviyesi = 3  # Yüksek alarm
+        elif hareket_var or kapi_pencere_acik:
+            alarm_seviyesi = 2  # Orta alarm
+        else:
+            alarm_seviyesi = 1  # Düşük alarm (gerekirse)
+        
+        # 4. Alarmı aktif et ve bildirim gönder
+        alarm_ac(alarm_seviyesi)
+        bildirim_gonder(alarm_seviyesi)
+        
+        # 5. Alarm sıfırlanana kadar döngüyü devam ettir
+        while not alarm_sifirlama_komutu_geldi():
+            bekle_bir_sure()
+        
+        alarm_sifirla()
+    
+    else:
+        # Tehdit yok, bekle ve sensörleri tekrar oku
+        bekle_bir_sure()
+```
+
+---
+
+### Açıklamalar:
+
+* `hareket_sensor_okuma()`, `kapi_pencere_sensor_okuma()`: Sensörlerden veri alma fonksiyonları
+* `kamera_aktif_mi()`: Kamera aktivasyonu gerekip gerekmediğini kontrol eder
+* `ev_sahibi_evde_mi()`: Yanlış alarm önlemek için ev sahibi kontrolü
+* `alarm_ac(seviye)`: Alarmı aktif eder, seviye 1-3 arasında
+* `bildirim_gonder(seviye)`: SMS, e-posta ve app bildirimleri gönderir
+* `alarm_sifirlama_komutu_geldi()`: Kullanıcıdan alarm sıfırlama komutu alır
+* `bekle_bir_sure()`: Sensörlerin aşırı sorgulanmaması için kısa bekleme süresi
+
+İstersen bu yapıyı daha detaylandırabilir veya gerçek kodlama diliyle yazabiliriz! Nasıl istersin?
+ DOT’ta Sonsuz D¨ong¨u
+ DOT dilinde sonsuz d¨ong¨uy¨u g¨ostermek i¸cin geri ok kullanın ve ”S¨urekli”
+ etiketi ekleyin.
+Tabii! DOT dilinde sonsuz döngüyü göstermek için, bir düğümden kendisine giden bir geri ok (self-loop) ekleyip üzerine "Sürekli" etiketi koyabilirsin.
+
+Örnek basit bir sonsuz döngü grafiği:
+digraph SonsuzDongu {
+    start [label="Başla"];
+    
+    start -> start [label="Sürekli"];
+}
+Bu grafik start düğümünden kendisine dönen bir ok içeriyor ve bu ok "Sürekli" etiketi ile işaretlenmiş.
+Eğer daha büyük bir sistem akışında sonsuz döngüyü göstermek istersen, örneğin:
+digraph AkilliEvGüvenlik {
+    system_active [label="Sistem Aktif mi?"];
+    sensör_okuma [label="Sensör Okuma"];
+    kontrol [label="Tehdit Kontrolü"];
+    alarm [label="Alarm ve Bildirim"];
+    
+    system_active -> sensör_okuma [label="Evet"];
+    system_active -> system_active [label="Hayır / Sürekli", style=dashed];
+    
+    sensör_okuma -> kontrol;
+    kontrol -> alarm [label="Tehdit Var"];
+    kontrol -> sensör_okuma [label="Tehdit Yok"];
+    alarm -> sensör_okuma [label="Alarm Sıfırlanana Kadar"];
+}
+Tabii! DOT dilinde sonsuz döngüyü göstermek için, bir düğümden kendisine giden bir geri ok (self-loop) ekleyip üzerine `"Sürekli"` etiketi koyabilirsin.
+
+Örnek basit bir sonsuz döngü grafiği:
+
+```dot
+digraph SonsuzDongu {
+    start [label="Başla"];
+    
+    start -> start [label="Sürekli"];
+}
+```
+
+Bu grafik `start` düğümünden kendisine dönen bir ok içeriyor ve bu ok `"Sürekli"` etiketi ile işaretlenmiş.
+
+---
+
+Eğer daha büyük bir sistem akışında sonsuz döngüyü göstermek istersen, örneğin:
+
+```dot
+digraph AkilliEvGüvenlik {
+    system_active [label="Sistem Aktif mi?"];
+    sensör_okuma [label="Sensör Okuma"];
+    kontrol [label="Tehdit Kontrolü"];
+    alarm [label="Alarm ve Bildirim"];
+    
+    system_active -> sensör_okuma [label="Evet"];
+    system_active -> system_active [label="Hayır / Sürekli", style=dashed];
+    
+    sensör_okuma -> kontrol;
+    kontrol -> alarm [label="Tehdit Var"];
+    kontrol -> sensör_okuma [label="Tehdit Yok"];
+    alarm -> sensör_okuma [label="Alarm Sıfırlanana Kadar"];
+}
+```
+
+Burada `system_active` düğümünden kendisine veya `sensör_okuma`ya dönen oklar sistemin sürekli çalıştığını ifade eder.
+
+İstersen, senin akışına özel detaylı DOT kodu da hazırlayabilirim!
+olur
+Harika! İşte senin IoT tabanlı akıllı ev güvenlik sisteminin sonsuz döngüsünü ve temel adımlarını gösteren DOT dili ile detaylı bir akış diyagramı:
+digraph AkilliEvGuvenlikSistemi {
+    rankdir=LR; // Soldan sağa akış
+    
+    node [shape=box, style=rounded];
+    
+    Start [label="Sistem Aktif mi?"];
+    SensorRead [label="Tüm Sensörleri Oku"];
+    ThreatCheck [label="Tehdit Algıla"];
+    CameraActivate [label="Kamera Aktivasyonu"];
+    FalseAlarmCheck [label="Ev Sahibi Evde mi?"];
+    AlarmLevel [label="Alarm Seviyesi Belirle"];
+    SendNotification [label="Bildirim Gönder (SMS + App + Email)"];
+    WaitLoop [label="Bekle ve Tekrar Kontrol Et"];
+    AlarmResetCheck [label="Alarm Sıfırlama Komutu Geldi mi?"];
+    AlarmActive [label="Alarm Aktif"];
+    
+    // Akış
+    Start -> SensorRead [label="Evet"];
+    Start -> Start [label="Hayır / Sürekli", style=dashed];
+    
+    SensorRead -> ThreatCheck;
+    
+    ThreatCheck -> CameraActivate [label="Tehdit Var"];
+    ThreatCheck -> WaitLoop [label="Tehdit Yok"];
+    
+    CameraActivate -> FalseAlarmCheck;
+    
+    FalseAlarmCheck -> WaitLoop [label="Ev Sahibi Evde (Yanlış Alarm)"];
+    FalseAlarmCheck -> AlarmLevel [label="Ev Sahibi Yok"];
+    
+    AlarmLevel -> SendNotification;
+    SendNotification -> AlarmActive;
+    
+    AlarmActive -> AlarmResetCheck;
+    
+    AlarmResetCheck -> WaitLoop [label="Sıfırlandı"];
+    AlarmResetCheck -> AlarmActive [label="Devam Ediyor", style=dashed];
+    
+    WaitLoop -> SensorRead [label="Sürekli"];
+}
+Harika! İşte senin IoT tabanlı akıllı ev güvenlik sisteminin sonsuz döngüsünü ve temel adımlarını gösteren **DOT dili ile detaylı bir akış diyagramı**:
+
+```dot
+digraph AkilliEvGuvenlikSistemi {
+    rankdir=LR; // Soldan sağa akış
+    
+    node [shape=box, style=rounded];
+    
+    Start [label="Sistem Aktif mi?"];
+    SensorRead [label="Tüm Sensörleri Oku"];
+    ThreatCheck [label="Tehdit Algıla"];
+    CameraActivate [label="Kamera Aktivasyonu"];
+    FalseAlarmCheck [label="Ev Sahibi Evde mi?"];
+    AlarmLevel [label="Alarm Seviyesi Belirle"];
+    SendNotification [label="Bildirim Gönder (SMS + App + Email)"];
+    WaitLoop [label="Bekle ve Tekrar Kontrol Et"];
+    AlarmResetCheck [label="Alarm Sıfırlama Komutu Geldi mi?"];
+    AlarmActive [label="Alarm Aktif"];
+    
+    // Akış
+    Start -> SensorRead [label="Evet"];
+    Start -> Start [label="Hayır / Sürekli", style=dashed];
+    
+    SensorRead -> ThreatCheck;
+    
+    ThreatCheck -> CameraActivate [label="Tehdit Var"];
+    ThreatCheck -> WaitLoop [label="Tehdit Yok"];
+    
+    CameraActivate -> FalseAlarmCheck;
+    
+    FalseAlarmCheck -> WaitLoop [label="Ev Sahibi Evde (Yanlış Alarm)"];
+    FalseAlarmCheck -> AlarmLevel [label="Ev Sahibi Yok"];
+    
+    AlarmLevel -> SendNotification;
+    SendNotification -> AlarmActive;
+    
+    AlarmActive -> AlarmResetCheck;
+    
+    AlarmResetCheck -> WaitLoop [label="Sıfırlandı"];
+    AlarmResetCheck -> AlarmActive [label="Devam Ediyor", style=dashed];
+    
+    WaitLoop -> SensorRead [label="Sürekli"];
+}
+```
+
+---
+
+### Açıklamalar:
+
+* `Start` düğümü sistemin aktif olup olmadığını kontrol eder ve aktif değilse kendi üzerine dönen **“Hayır / Sürekli”** etiketiyle sonsuz döngü oluşturur.
+* Sensör okuma, tehdit kontrolü ve ardından kamera, yanlış alarm ve alarm seviyesi adımları takip edilir.
+* `AlarmActive` durumunda, alarm sıfırlama komutu gelene kadar alarm devam eder (kendine dönen ok ve “Devam Ediyor” etiketiyle).
+* Döngünün sonunda `WaitLoop` kısa bekleme süresi için kullanılır ve ardından sensör okumaya geri döner.
+
+---
+
+Eğer bu grafiği senin için DOT dosyası olarak hazırlamamı veya online bir araçta çalıştırabileceğin şekilde vermemi istersen söyleyebilirsin. Veya istediğin başka ekleme/düzenleme varsa onu da yapabiliriz!
+Bunu bana 5-6 satırda kısaca açıklar mısın
+Tabii! İşte kısaca açıklaması:
+
+Bu DOT grafiği, akıllı ev güvenlik sisteminin 7/24 çalıştığını gösterir. Sistem önce aktif mi diye kontrol eder; değilse kendisine dönen “Sürekli” döngü vardır. Aktifse tüm sensörler okunur ve tehdit var mı diye bakılır. Tehdit varsa kamera açılır, ev sahibi kontrol edilir; yoksa alarm seviyesi belirlenir ve bildirim gönderilir. Alarm sıfırlanana kadar aktif kalır ve sonrasında sensör okuma döngüsüne geri döner. Böylece sistem kesintisiz çalışır.
+Bu sistemi bana 5-6 satırda kısaca açıklar mısın
+Tabii! İşte sistemin kısa açıklaması:
+
+Akıllı ev güvenlik sistemi sürekli aktif olarak tüm sensörlerden veri toplar. Hareket veya kapı/pencere açılması gibi tehditleri algılar. Tehdit varsa, kamera aktif olur ve ev sahibinin evde olup olmadığı kontrol edilir; yanlış alarm önlenir. Tehdit gerçekse alarm seviyesi belirlenir ve SMS, uygulama ile e-posta üzerinden bildirim gönderilir. Alarm, kullanıcı sıfırlayana kadar aktif kalır ve ardından sistem sensör okumaya devam eder. Böylece sistem 7/24 kesintisiz güvenlik sağlar.
