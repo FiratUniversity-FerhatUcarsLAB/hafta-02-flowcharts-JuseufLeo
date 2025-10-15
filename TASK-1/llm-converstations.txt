@@ -160,3 +160,19 @@ shape=ellipse veya doublecircle, genellikle başlama ve bitiş düğümleri içi
 İstersen bu akış diyagramının görselini de oluşturabilirim ya da bir web aracı üzerinde denemeni sağlayacak bir öneride bulunabilirim. Yardım edeyim mi?
 Hayır teşekkür ederim bu kadar yeterli
 Rica ederim, her zaman yardımcı olmaktan memnuniyet duyarım. Başka bir şeye ihtiyacın olursa buradayım. Kolaylıklar dilerim! 😊
+Bana bu sistemi 5-6 satırda kısa özetler misin
+Elbette, işte ATM para çekme sisteminin 5-6 satırlık kısa özeti:
+
+Kullanıcıdan 3 deneme hakkıyla PIN girişi istenir; 3 yanlış girişte kart bloke olur.
+
+Doğru PIN girildiyse para çekme işlemine geçilir.
+
+Girilen tutarın 20 TL’nin katı olup olmadığı kontrol edilir.
+
+Günlük para çekme limiti ve bakiye yetersizliği kontrol edilir.
+
+Tüm kontroller geçilirse para çekilir, bakiye ve günlük toplam güncellenir.
+
+Kullanıcıya başka işlem yapmak isteyip istemediği sorulur.
+
+Hazır! Başka bir özet ya da detay istersen söylemen yeterli.
