@@ -1,0 +1,42 @@
+digraph ATM {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+
+    Start [label="BAŞLA", shape=ellipse];
+    SetVars [label="PIN = 1234\nbakiye = 5000\nlimit = 2000\ngünlük_çekilen = 0\nhak = 3"];
+    
+    CheckPIN [label="PIN gir\nDoğru mu?"];
+    PinWrong [label="Hatalı PIN\nhak = hak - 1"];
+    Blocked [label="Kart bloke oldu\nDUR", shape=doublecircle];
+    AskAmount [label="Tutar gir"];
+    
+    ModCheck [label="20'nin katı mı?"];
+    LimitCheck [label="Günlük limit aşılıyor mu?"];
+    BakiyeCheck [label="Yetersiz bakiye var mı?"];
+    Success [label="Para ver\nbakiye -= tutar\ngünlük_çekilen += tutar"];
+    
+    Again [label="Tekrar işlem? (E/H)"];
+    End [label="İyi günler\nDUR", shape=doublecircle];
+
+    // PIN doğrulama akışı
+    Start -> SetVars -> CheckPIN;
+    CheckPIN -> AskAmount [label="Evet"];
+    CheckPIN -> PinWrong [label="Hayır"];
+    PinWrong -> CheckPIN [label="hak > 0"];
+    PinWrong -> Blocked [label="hak = 0"];
+
+    // Tutar ve işlem kontrolleri
+    AskAmount -> ModCheck;
+    ModCheck -> AskAmount [label="Hayır"];
+    ModCheck -> LimitCheck [label="Evet"];
+    
+    LimitCheck -> AskAmount [label="Aşıyor"];
+    LimitCheck -> BakiyeCheck [label="Aşmıyor"];
+    
+    BakiyeCheck -> AskAmount [label="Yetersiz"];
+    BakiyeCheck -> Success [label="Yeterli"];
+    
+    Success -> Again;
+    Again -> AskAmount [label="E"];
+    Again -> End [label="H"];
+}
