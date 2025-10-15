@@ -1,0 +1,40 @@
+digraph AkilliEvGuvenlikSistemi {
+    rankdir=LR; // Soldan sağa akış
+    
+    node [shape=box, style=rounded];
+    
+    Start [label="Sistem Aktif mi?"];
+    SensorRead [label="Tüm Sensörleri Oku"];
+    ThreatCheck [label="Tehdit Algıla"];
+    CameraActivate [label="Kamera Aktivasyonu"];
+    FalseAlarmCheck [label="Ev Sahibi Evde mi?"];
+    AlarmLevel [label="Alarm Seviyesi Belirle"];
+    SendNotification [label="Bildirim Gönder (SMS + App + Email)"];
+    WaitLoop [label="Bekle ve Tekrar Kontrol Et"];
+    AlarmResetCheck [label="Alarm Sıfırlama Komutu Geldi mi?"];
+    AlarmActive [label="Alarm Aktif"];
+    
+    // Akış
+    Start -> SensorRead [label="Evet"];
+    Start -> Start [label="Hayır / Sürekli", style=dashed];
+    
+    SensorRead -> ThreatCheck;
+    
+    ThreatCheck -> CameraActivate [label="Tehdit Var"];
+    ThreatCheck -> WaitLoop [label="Tehdit Yok"];
+    
+    CameraActivate -> FalseAlarmCheck;
+    
+    FalseAlarmCheck -> WaitLoop [label="Ev Sahibi Evde (Yanlış Alarm)"];
+    FalseAlarmCheck -> AlarmLevel [label="Ev Sahibi Yok"];
+    
+    AlarmLevel -> SendNotification;
+    SendNotification -> AlarmActive;
+    
+    AlarmActive -> AlarmResetCheck;
+    
+    AlarmResetCheck -> WaitLoop [label="Sıfırlandı"];
+    AlarmResetCheck -> AlarmActive [label="Devam Ediyor", style=dashed];
+    
+    WaitLoop -> SensorRead [label="Sürekli"];
+}
