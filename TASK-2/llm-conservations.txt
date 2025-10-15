@@ -1,0 +1,347 @@
+“E-ticaret sitesinde sepet y¨onetimi ve ¨odeme sistemini adım adım a¸cıkla.
+ Kullanıcı giri¸si, ¨ur¨un ekleme, stok kontrol¨u, indirim kodu, kargo hesaplama
+ ve ¨odeme a¸samalarını i¸cermeli.
+Tabii! Aşağıda bir e-ticaret sitesindeki sepet yönetimi ve ödeme sistemini adım adım, mantıksal işleyiş sırasına göre açıklıyorum. Her adım kullanıcı yolculuğuna göre düzenlenmiştir ve şu bileşenleri içerir:
+
+Kullanıcı girişi
+
+Ürün ekleme
+
+Stok kontrolü
+
+İndirim kodu
+
+Kargo hesaplama
+
+Ödeme işlemleri
+🛒 E-Ticaret Sepet ve Ödeme Süreci – Adım Adım Açıklama
+1. Kullanıcı Girişi veya Kaydı
+
+Kullanıcı siteye giriş yapar veya yeni hesap oluşturur.
+
+Oturum açılmadan önce sepete ürün eklenmesine izin verilebilir, ancak ödeme için giriş zorunludur.
+
+Giriş sonrası kullanıcının sepeti ve sipariş geçmişi yüklenir.
+2. Ürün Ekleme ve Sepet Yönetimi
+
+Kullanıcı ürün listesinden istediği ürünü ve miktarı seçerek sepete ekler.
+
+Ürün sepete eklenmeden önce stok kontrolü yapılır.
+
+Stokta yeterli ürün varsa sepete eklenir.
+
+Aksi takdirde “stokta yok” uyarısı gösterilir.
+
+Kullanıcı sepet içeriğini güncelleyebilir (ürün sayısını değiştirme, silme vb.).
+3. İndirim Kodu / Kupon Uygulama
+
+Kullanıcı, ödeme öncesinde bir indirim kodu girebilir.
+
+Kodun geçerliliği kontrol edilir:
+
+Süresi dolmamış mı?
+
+Minimum sepet tutarı karşılanıyor mu?
+
+Belirli ürünler/kategorilerle sınırlı mı?
+
+Geçerliyse indirim sepet tutarına uygulanır.
+4. Kargo Ücreti Hesaplama
+
+Kullanıcının adres bilgisine göre kargo bedeli hesaplanır.
+
+Sabit ücret, mesafeye göre dinamik ücret veya ücretsiz kargo kampanyaları olabilir.
+
+Kargo bedeli toplam fiyata eklenir.
+
+5. Ödeme Aşaması
+
+Kullanıcı ödeme ekranına yönlendirilir.
+
+Kredi kartı, banka kartı, havale/EFT, kapıda ödeme gibi seçenekler sunulur.
+
+Ödeme bilgileri alınır ve güvenli ödeme altyapısı (örneğin 3D Secure) ile işlenir.
+
+Ödeme başarılıysa sipariş oluşturulur ve stok düşürülür.
+
+Kullanıcıya onay mesajı ve e-posta gönderilir.
+🔁 Opsiyonel Süreçler:
+
+Sadakat puanı, hediye çeki kullanımı
+
+Kargo takip numarası üretimi
+
+Sipariş iptali ve iade süreci
+
+İstersen bu süreci akış diyagramı, kod yapısı veya veri tabanı modeli şeklinde de detaylandırabilirim. Yardımcı olayım mı?
+“Bu sistemi pseudocode olarak yaz. D¨ong¨uler i¸cin D¨ ONG¨ U, ko¸sullar i¸cin
+ E˘ GER-˙ ISE kullan. Her adımı BAS¸LA ile ba¸slat, B˙ IT˙ IR ile bitir. T¨um
+ kontrol noktalarını belirt.
+Elbette! Aşağıda e-ticaret sitesinde sepet yönetimi ve ödeme sistemi için, isteklerin doğrultusunda hazırlanmış detaylı bir pseudocode (sözde kod) yer almaktadır.
+
+✅ İçerikler:
+
+Kullanıcı girişi
+
+Ürün ekleme
+
+Stok kontrolü
+
+İndirim kodu uygulama
+
+Kargo hesaplama
+
+Ödeme aşamaları
+
+Döngüler: DÖNGÜ, Koşullar: EĞER - İSE
+
+Her adım BAŞLA ve BİTİR ile çevrildi
+
+🧾 E-Ticaret Sepet ve Ödeme Sistemi – Pseudocode
+BAŞLA // 1. Kullanıcı Girişi
+
+    YAZ "Kullanıcı adı giriniz:"
+    OKU kullanici_adi
+    YAZ "Şifre giriniz:"
+    OKU sifre
+
+    EĞER sistemde_kayıtlı(kullanici_adi, sifre) İSE
+        YAZ "Giriş başarılı"
+    DEĞİLSE
+        YAZ "Hatalı giriş. Lütfen tekrar deneyin."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 2. Ürün Ekleme ve Stok Kontrolü
+
+    DÖNGÜ TRUE TEKRAR
+        YAZ "Ürün ID giriniz (Çıkmak için 0):"
+        OKU urun_id
+
+        EĞER urun_id = 0 İSE
+            ÇIK
+        SON
+
+        YAZ "Kaç adet eklemek istiyorsunuz?"
+        OKU miktar
+
+        EĞER stok_yeterli_mi(urun_id, miktar) İSE
+            sepet ← sepet + {urun_id, miktar}
+            YAZ "Ürün sepete eklendi."
+        DEĞİLSE
+            YAZ "Yetersiz stok."
+        SON
+
+    SONDÖNGÜ
+
+BİTİR
+
+
+BAŞLA // 3. İndirim Kodu Uygulama
+
+    YAZ "İndirim kodunuz varsa giriniz (yoksa boş bırakın):"
+    OKU indirim_kodu
+
+    EĞER indirim_kodu ≠ "" İSE
+        EĞER kod_gecerli_mi(indirim_kodu) İSE
+            indirim_orani ← kodu_al(indirim_kodu)
+            toplam_tutar ← toplam_tutar * (1 - indirim_orani)
+            YAZ "İndirim uygulandı: ", indirim_orani * 100, "%"
+        DEĞİLSE
+            YAZ "İndirim kodu geçersiz."
+        SON
+    SON
+
+BİTİR
+
+
+BAŞLA // 4. Kargo Hesaplama
+
+    YAZ "Kargo adresinizi girin:"
+    OKU adres
+
+    kargo_ucreti ← kargo_hesapla(adres, sepet)
+
+    toplam_tutar ← toplam_tutar + kargo_ucreti
+
+    YAZ "Kargo ücreti: ", kargo_ucreti
+    YAZ "Toplam ödenecek tutar: ", toplam_tutar
+
+BİTİR
+
+
+BAŞLA // 5. Ödeme Aşaması
+
+    YAZ "Ödeme yöntemini seçin: (1) Kredi Kartı (2) Havale (3) Kapıda Ödeme"
+    OKU odeme_secimi
+
+    EĞER odeme_secimi = 1 İSE
+        YAZ "Kart bilgilerini giriniz:"
+        OKU kart_no, son_kullanma, cvv
+
+        EĞER kart_gecerli_mi(kart_no, son_kullanma, cvv) İSE
+            ödeme_başarılı ← kredi_karti_cek(kart_no, toplam_tutar)
+        DEĞİLSE
+            YAZ "Kart bilgileri geçersiz."
+            DUR
+        SON
+
+    DEĞİLSE EĞER odeme_secimi = 2 İSE
+        YAZ "Havale için banka bilgileri gönderildi."
+        ödeme_başarılı ← TRUE
+
+    DEĞİLSE EĞER odeme_secimi = 3 İSE
+        YAZ "Kapıda ödeme seçildi. Sipariş onaylandı."
+        ödeme_başarılı ← TRUE
+
+    DEĞİLSE
+        YAZ "Geçersiz seçim."
+        DUR
+    SON
+
+    EĞER ödeme_başarılı İSE
+        stok_guncelle(sepet)
+        siparis_olustur(kullanici_adi, sepet, toplam_tutar)
+        YAZ "Ödeme başarılı, siparişiniz oluşturuldu."
+    DEĞİLSE
+        YAZ "Ödeme başarısız. Lütfen tekrar deneyin."
+    SON
+
+BİTİR
+
+📌 Açıklamalar:
+
+stok_yeterli_mi(), kodu_al(), kargo_hesapla() gibi fonksiyonlar, sistemdeki kontrol ve hesaplama mekanizmalarını temsil eder.
+
+Her ana süreç bağımsız BAŞLA ... BİTİR bloklarıyla ayrılmıştır.
+
+Kontrol noktaları tüm kritik adımlarda belirtilmiştir (stok, indirim, kargo, ödeme).
+İstersen bu pseudocode’u Python, JavaScript gibi bir dile çevirebilirim veya akış diyagramına dönüştürebilirim. Yardımcı olayım mı?
+ Adım 3: DOT Kodu
+ ¨ U¸c¨
+ unc¨u Prompt:
+ “Pseudocode’u Graphviz DOT formatına ¸cevir. rankdir=TB kullan. Karar
+ noktalarında EVET/HAYIR etiketlerini unutma.
+Harika, şimdi Adım 3’teyiz. Daha önce verdiğim e-ticaret pseudocode’unu, Graphviz’in DOT formatına uygun şekilde çeviriyorum.
+
+Senin belirttiğin gibi:
+
+rankdir=TB (yani yukarıdan aşağıya akış)
+
+Karar (koşul) noktalarında EVET / HAYIR etiketleri
+
+Akış diyagramı mantığına uygun düğüm yapıları
+✅ E-Ticaret Sepet ve Ödeme Sistemi – DOT Kodu
+digraph ECommerceFlow {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+
+    // Başlangıç ve giriş
+    Start [label="BAŞLA", shape=ellipse];
+    Login [label="Kullanıcı adı ve şifre al"];
+    CheckLogin [label="Giriş başarılı mı?", shape=diamond];
+    LoginFail [label="Giriş başarısız\nSistemden çık", shape=doublecircle];
+
+    // Ürün ekleme
+    AddLoop [label="Ürün ID al (0 ise çık)", shape=diamond];
+    QtyInput [label="Adet gir"];
+    CheckStock [label="Stok yeterli mi?", shape=diamond];
+    AddToCart [label="Sepete ekle"];
+    StockFail [label="Yetersiz stok\nUyarı göster"];
+
+    // İndirim kodu
+    AskCoupon [label="İndirim kodu girildi mi?", shape=diamond];
+    CheckCoupon [label="Kod geçerli mi?", shape=diamond];
+    ApplyCoupon [label="İndirim uygulandı"];
+    InvalidCoupon [label="Geçersiz kod\nUyarı göster"];
+
+    // Kargo hesaplama
+    Address [label="Kargo adresi gir"];
+    CalcShipping [label="Kargo ücreti hesapla\nToplama ekle"];
+
+    // Ödeme süreci
+    PaymentSelect [label="Ödeme yöntemi seç:\n1-KK 2-Havale 3-Kapıda", shape=box];
+    IsKK [label="Kredi kartı mı?", shape=diamond];
+    CardInfo [label="Kart bilgilerini al"];
+    ValidCard [label="Kart geçerli mi?", shape=diamond];
+    KKSuccess [label="Ödeme başarılı"];
+    KKFail [label="Kart reddedildi\nDUR", shape=doublecircle];
+
+    IsHavale [label="Havale mi?", shape=diamond];
+    HavaleSuccess [label="Havale bilgileri ver\nSipariş oluştur"];
+
+    IsKapida [label="Kapıda ödeme mi?", shape=diamond];
+    KapidaSuccess [label="Sipariş oluştur"];
+
+    Finalize [label="Stok güncelle, onay gönder"];
+    End [label="BİTİR", shape=ellipse];
+
+    // Akış bağlantıları
+    Start -> Login -> CheckLogin;
+    CheckLogin -> AddLoop [label="EVET"];
+    CheckLogin -> LoginFail [label="HAYIR"];
+
+    AddLoop -> QtyInput [label="≠ 0"];
+    AddLoop -> AskCoupon [label="= 0"];
+    QtyInput -> CheckStock;
+    CheckStock -> AddToCart [label="EVET"];
+    CheckStock -> StockFail [label="HAYIR"];
+    StockFail -> AddLoop;
+    AddToCart -> AddLoop;
+
+    AskCoupon -> CheckCoupon [label="EVET"];
+    AskCoupon -> Address [label="HAYIR"];
+    CheckCoupon -> ApplyCoupon [label="EVET"];
+    CheckCoupon -> InvalidCoupon [label="HAYIR"];
+    ApplyCoupon -> Address;
+    InvalidCoupon -> Address;
+
+    Address -> CalcShipping -> PaymentSelect;
+
+    PaymentSelect -> IsKK;
+    IsKK -> CardInfo [label="EVET"];
+    IsKK -> IsHavale [label="HAYIR"];
+
+    CardInfo -> ValidCard;
+    ValidCard -> KKSuccess [label="EVET"];
+    ValidCard -> KKFail [label="HAYIR"];
+    KKSuccess -> Finalize;
+
+    IsHavale -> HavaleSuccess [label="EVET"];
+    IsHavale -> IsKapida [label="HAYIR"];
+    HavaleSuccess -> Finalize;
+
+    IsKapida -> KapidaSuccess [label="EVET"];
+    IsKapida -> End [label="HAYIR"];
+    KapidaSuccess -> Finalize;
+
+    Finalize -> End;
+}
+
+📌 Notlar:
+
+Karar noktaları shape=diamond ile belirtildi.
+
+Akış rankdir=TB ile yukarıdan aşağıya ilerler.
+
+EVET / HAYIR yönlendirme etiketleri kritik kararlarda açıkça yazıldı.
+
+Her ana süreci açıkça temsil eden düğümler var.
+stersen bu DOT kodunu .dot dosyası olarak indirip, şu komutla görselleştirebilirsin:
+dot -Tpng e_ticaret.dot -o e_ticaret.png
+
+Bu diyagramı görsel olarak oluşturmamı veya düzenlenebilir hâle getirmemi ister misin?
+Bu sistemi 5-6 satırda kısaca özetler misin
+Elbette! İşte e-ticaret sepet yönetimi ve ödeme sistemi sürecinin 5–6 satırlık kısa özeti:
+
+1. Kullanıcı sisteme giriş yapar; geçersizse işlem sonlandırılır.
+2. Ürün sepete eklenir; her eklemede stok kontrolü yapılır.
+3. Kullanıcı varsa indirim kodu girer, geçerliyse indirim uygulanır.
+4. Kargo adresi girilir ve kargo ücreti hesaplanarak toplam tutara eklenir.
+5. Kullanıcı ödeme yöntemini seçer; ödeme onaylanırsa sipariş oluşturulur.
+6. Stok güncellenir, sipariş onayı gösterilir ve işlem tamamlanır.
+
+Hazır! Başka bir özet ya da biçimlendirme istersen yardımcı olabilirim.
