@@ -1,53 +1,40 @@
-BAŞLA
+# Sistem sonsuz döngüde çalışır
+while True:  # DOĞRU koşulu ile sonsuz döngü
 
-DÖNGÜ (DOĞRU)
-    // Sistem aktif mi?
-    EĞER sistem_aktif_mi() = HAYIR İSE
-        BEKLE(1 saniye)
-        DEVAM ET
-    SON
-
-    // Tüm sensörleri oku
-    hareket_algilandi ← hareket_sensor_oku()
-    kapi_pencere_acildi ← kapi_pencere_sensor_oku()
-    cam_kirildi ← cam_kirildi_sensor_oku()
-    // İstenirse başka sensörler eklenebilir
-
-    // Tehdit seviyesi belirle
-    tehdit_seviyesi ← 0
-    EĞER hareket_algilandi = EVET VE kapi_pencere_acildi = EVET VE cam_kirildi = EVET İSE
-        tehdit_seviyesi ← 3   // Yüksek
-    DEĞİLSE EĞER hareket_algilandi = EVET VE (kapi_pencere_acildi = EVET VEYA cam_kirildi = EVET) İSE
-        tehdit_seviyesi ← 2   // Orta
-    DEĞİLSE EĞER hareket_algilandi = EVET VE kapi_pencere_acildi = HAYIR VE cam_kirildi = HAYIR İSE
-        tehdit_seviyesi ← 1   // Düşük
-    SON
-
-    // Yanlış alarm kontrolü
-    ev_sahibi_evde ← ev_sahibi_durumu()
-    EĞER ev_sahibi_evde = EVET İSE
-        tehdit_seviyesi ← 0   // Yanlış alarm önleme
-    SON
-
-    // Alarm ve bildirim işlemleri
-    EĞER tehdit_seviyesi = 0 İSE
-        alarm_sistemi_kapat()
-    DEĞİLSE
-        alarm_seviyesi_ayarla(tehdit_seviyesi)
-        alarm_ver()
-        SMS_gonder(tehdit_seviyesi)
-        App_bildirim_gonder(tehdit_seviyesi)
-        Email_gonder(tehdit_seviyesi)
-    SON
-
-    // Alarm sıfırlama kontrolü
-    EĞER alarm_sifirlandi_mi() = EVET İSE
-        alarm_sistemi_kapat()
-        BEKLE(5 saniye)
-        DEVAM ET
-    SON
-
-    BEKLE(5 saniye)
-SONDÖNGÜ
-
-BİTİR
+    # 1. Tüm sensörleri oku
+    hareket_var = hareket_sensor_okuma()
+    kapi_pencere_acik = kapi_pencere_sensor_okuma()
+    
+    # 2. Tehdit durumu kontrolü
+    if hareket_var or kapi_pencere_acik:
+        
+        # Kamera aktivasyonu kontrolü (isteğe bağlı)
+        if kamera_aktif_mi():
+            kamera_aktivasyonu_yap()
+        
+        # Yanlış alarm kontrolü (ev sahibi evde mi?)
+        if ev_sahibi_evde_mi():
+            alarm_sifirla()
+            continue  # Döngü başına dön
+        
+        # 3. Alarm seviyesi belirle
+        if hareket_var and kapi_pencere_acik:
+            alarm_seviyesi = 3  # Yüksek alarm
+        elif hareket_var or kapi_pencere_acik:
+            alarm_seviyesi = 2  # Orta alarm
+        else:
+            alarm_seviyesi = 1  # Düşük alarm (gerekirse)
+        
+        # 4. Alarmı aktif et ve bildirim gönder
+        alarm_ac(alarm_seviyesi)
+        bildirim_gonder(alarm_seviyesi)
+        
+        # 5. Alarm sıfırlanana kadar döngüyü devam ettir
+        while not alarm_sifirlama_komutu_geldi():
+            bekle_bir_sure()
+        
+        alarm_sifirla()
+    
+    else:
+        # Tehdit yok, bekle ve sensörleri tekrar oku
+        bekle_bir_sure()
