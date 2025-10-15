@@ -1,0 +1,85 @@
+digraph ECommerceFlow {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+
+    // Başlangıç ve giriş
+    Start [label="BAŞLA", shape=ellipse];
+    Login [label="Kullanıcı adı ve şifre al"];
+    CheckLogin [label="Giriş başarılı mı?", shape=diamond];
+    LoginFail [label="Giriş başarısız\nSistemden çık", shape=doublecircle];
+
+    // Ürün ekleme
+    AddLoop [label="Ürün ID al (0 ise çık)", shape=diamond];
+    QtyInput [label="Adet gir"];
+    CheckStock [label="Stok yeterli mi?", shape=diamond];
+    AddToCart [label="Sepete ekle"];
+    StockFail [label="Yetersiz stok\nUyarı göster"];
+
+    // İndirim kodu
+    AskCoupon [label="İndirim kodu girildi mi?", shape=diamond];
+    CheckCoupon [label="Kod geçerli mi?", shape=diamond];
+    ApplyCoupon [label="İndirim uygulandı"];
+    InvalidCoupon [label="Geçersiz kod\nUyarı göster"];
+
+    // Kargo hesaplama
+    Address [label="Kargo adresi gir"];
+    CalcShipping [label="Kargo ücreti hesapla\nToplama ekle"];
+
+    // Ödeme süreci
+    PaymentSelect [label="Ödeme yöntemi seç:\n1-KK 2-Havale 3-Kapıda", shape=box];
+    IsKK [label="Kredi kartı mı?", shape=diamond];
+    CardInfo [label="Kart bilgilerini al"];
+    ValidCard [label="Kart geçerli mi?", shape=diamond];
+    KKSuccess [label="Ödeme başarılı"];
+    KKFail [label="Kart reddedildi\nDUR", shape=doublecircle];
+
+    IsHavale [label="Havale mi?", shape=diamond];
+    HavaleSuccess [label="Havale bilgileri ver\nSipariş oluştur"];
+
+    IsKapida [label="Kapıda ödeme mi?", shape=diamond];
+    KapidaSuccess [label="Sipariş oluştur"];
+
+    Finalize [label="Stok güncelle, onay gönder"];
+    End [label="BİTİR", shape=ellipse];
+
+    // Akış bağlantıları
+    Start -> Login -> CheckLogin;
+    CheckLogin -> AddLoop [label="EVET"];
+    CheckLogin -> LoginFail [label="HAYIR"];
+
+    AddLoop -> QtyInput [label="≠ 0"];
+    AddLoop -> AskCoupon [label="= 0"];
+    QtyInput -> CheckStock;
+    CheckStock -> AddToCart [label="EVET"];
+    CheckStock -> StockFail [label="HAYIR"];
+    StockFail -> AddLoop;
+    AddToCart -> AddLoop;
+
+    AskCoupon -> CheckCoupon [label="EVET"];
+    AskCoupon -> Address [label="HAYIR"];
+    CheckCoupon -> ApplyCoupon [label="EVET"];
+    CheckCoupon -> InvalidCoupon [label="HAYIR"];
+    ApplyCoupon -> Address;
+    InvalidCoupon -> Address;
+
+    Address -> CalcShipping -> PaymentSelect;
+
+    PaymentSelect -> IsKK;
+    IsKK -> CardInfo [label="EVET"];
+    IsKK -> IsHavale [label="HAYIR"];
+
+    CardInfo -> ValidCard;
+    ValidCard -> KKSuccess [label="EVET"];
+    ValidCard -> KKFail [label="HAYIR"];
+    KKSuccess -> Finalize;
+
+    IsHavale -> HavaleSuccess [label="EVET"];
+    IsHavale -> IsKapida [label="HAYIR"];
+    HavaleSuccess -> Finalize;
+
+    IsKapida -> KapidaSuccess [label="EVET"];
+    IsKapida -> End [label="HAYIR"];
+    KapidaSuccess -> Finalize;
+
+    Finalize -> End;
+}
