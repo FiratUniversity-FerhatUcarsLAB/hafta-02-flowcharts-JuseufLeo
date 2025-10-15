@@ -1,0 +1,839 @@
+Mod¨ul 1: Randevu Alma “Hastane randevu sistemi i¸cin algoritma: kimlik do˘grulama, poliklinik se¸cimi, doktor listesi g¨or¨unt¨uleme, uygun saatleri g¨osterme, randevu onaylama ve SMS g¨onderme. Pseudocode yaz.”
+Aşağıda, bir hastane randevu sistemi için istenilen adımları içeren pseudocode (sözde kod) verilmiştir.
+
+✅ Kapsanan İşlevler:
+
+Kimlik doğrulama
+
+Poliklinik seçimi
+
+Doktor listesi görüntüleme
+
+Uygun saatleri gösterme
+
+Randevu onaylama
+
+SMS gönderme
+🧾 Hastane Randevu Sistemi – Pseudocode
+BAŞLA // 1. Kimlik Doğrulama
+
+    YAZ "TC Kimlik Numaranızı girin:"
+    OKU tc_kimlik
+    YAZ "Şifrenizi girin:"
+    OKU sifre
+
+    EĞER kullanici_dogrula(tc_kimlik, sifre) İSE
+        YAZ "Giriş başarılı."
+    DEĞİLSE
+        YAZ "Kimlik doğrulama başarısız. Sisteme erişim reddedildi."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 2. Poliklinik Seçimi
+
+    YAZ "Lütfen bir poliklinik seçiniz:"
+    poliklinikler ← poliklinik_listesi_getir()
+    YAZ poliklinikler
+    OKU secilen_poliklinik
+
+BİTİR
+
+
+BAŞLA // 3. Doktor Listesi Görüntüleme
+
+    doktorlar ← doktor_listesi_getir(secilen_poliklinik)
+    YAZ "Bu poliklinikteki doktorlar:"
+    YAZ doktorlar
+    YAZ "Bir doktor seçiniz:"
+    OKU secilen_doktor
+
+BİTİR
+
+
+BAŞLA // 4. Uygun Saatleri Gösterme
+
+    saatler ← uygun_saatler_getir(secilen_doktor)
+    EĞER saatler ≠ boş İSE
+        YAZ "Uygun randevu saatleri:"
+        YAZ saatler
+        YAZ "Bir saat seçiniz:"
+        OKU secilen_saat
+    DEĞİLSE
+        YAZ "Bu doktor için uygun saat bulunamadı."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 5. Randevu Onaylama
+
+    YAZ "Seçtiğiniz randevu:"
+    YAZ "Poliklinik: ", secilen_poliklinik
+    YAZ "Doktor: ", secilen_doktor
+    YAZ "Saat: ", secilen_saat
+    YAZ "Onaylıyor musunuz? (E/H)"
+    OKU onay
+
+    EĞER onay = "E" VEYA onay = "e" İSE
+        randevu_kaydet(tc_kimlik, secilen_doktor, secilen_saat)
+        sms_gonder(tc_kimlik, secilen_doktor, secilen_saat)
+        YAZ "Randevunuz başarıyla oluşturuldu ve SMS gönderildi."
+    DEĞİLSE
+        YAZ "Randevu iptal edildi."
+    SON
+
+BİTİR
+
+📌 Açıklamalar:
+
+kullanici_dogrula(), doktor_listesi_getir(), uygun_saatler_getir(), sms_gonder() gibi fonksiyonlar arka uçta (backend) çalışan servisler olarak düşünülmüştür.
+
+Sistemin her adımı net bir şekilde BAŞLA ... BİTİR blokları içinde yazılmıştır.
+
+Kullanıcı, randevuyu son adımda onaylamadan önce tüm seçimlerini görür.
+İstersen bu sistemi DOT formatında akış diyagramına da çevirebilirim. Yardımcı olayım mı?
+ Mod¨ul 2: Tahlil Sonu¸cları
+ “Tahlil sonucu g¨or¨unt¨uleme sistemi: kimlik do˘grulama, tahlil varlı˘gı
+ kontrol¨u, sonu¸c hazır mı kontrol¨u, g¨or¨unt¨uleme veya bekleme mesajı, PDF
+ indirme. Pseudocode yaz.”
+Elbette! Aşağıda, Tahlil Sonuçları Görüntüleme Sistemi için istenilen tüm adımları kapsayan pseudocode (sözde kod)** yer almaktadır.
+
+✅ Kapsanan Aşamalar:
+
+Kimlik doğrulama
+
+Tahlil varlığı kontrolü
+
+Sonuç hazır mı kontrolü
+
+Görüntüleme veya bekleme mesajı
+
+PDF indirme
+🧾 Tahlil Sonuçları Görüntüleme Sistemi – Pseudocode
+BAŞLA // 1. Kimlik Doğrulama
+
+    YAZ "TC Kimlik Numaranızı girin:"
+    OKU tc_kimlik
+    YAZ "Şifrenizi girin:"
+    OKU sifre
+
+    EĞER kullanici_dogrula(tc_kimlik, sifre) İSE
+        YAZ "Giriş başarılı."
+    DEĞİLSE
+        YAZ "Kimlik doğrulama başarısız. Giriş reddedildi."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 2. Tahlil Varlığı Kontrolü
+
+    tahliller ← tahlil_listesi_getir(tc_kimlik)
+
+    EĞER tahliller ≠ boş İSE
+        YAZ "Mevcut tahliller:"
+        YAZ tahliller
+        YAZ "Bir tahlil seçiniz:"
+        OKU secilen_tahlil
+    DEĞİLSE
+        YAZ "Herhangi bir tahlil kaydınız bulunmamaktadır."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 3. Sonuç Hazır mı Kontrolü
+
+    EĞER tahlil_sonucu_hazir_mi(secilen_tahlil) İSE
+        YAZ "Tahlil sonucu hazır. Görüntüleniyor..."
+        sonuc ← tahlil_sonucu_getir(secilen_tahlil)
+        YAZ sonuc
+    DEĞİLSE
+        YAZ "Tahlil sonucu henüz hazır değil. Lütfen daha sonra tekrar deneyin."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 4. PDF İndirme
+
+    YAZ "Sonucu PDF olarak indirmek ister misiniz? (E/H)"
+    OKU cevap
+
+    EĞER cevap = "E" VEYA cevap = "e" İSE
+        pdf_olustur(secilen_tahlil)
+        YAZ "PDF dosyası indirildi."
+    DEĞİLSE
+        YAZ "PDF indirimi iptal edildi."
+    SON
+
+BİTİR
+
+📌 Açıklamalar:
+
+kullanici_dogrula(), tahlil_listesi_getir(), tahlil_sonucu_getir(), pdf_olustur() gibi işlemler arka uçta sistemin sunduğu servislerle çalışır.
+
+Tahlil sonucu hazır değilse, sistem kullanıcıyı bilgilendirip işlemi sonlandırır.
+
+Sonuç hazırsa, kullanıcıya gösterilir ve isterse PDF olarak da indirebilir.
+Elbette! Aşağıda, **Tahlil Sonuçları Görüntüleme Sistemi** için istenilen tüm adımları kapsayan **pseudocode** (sözde kod)** yer almaktadır.
+
+---
+
+## ✅ Kapsanan Aşamalar:
+
+* Kimlik doğrulama
+* Tahlil varlığı kontrolü
+* Sonuç hazır mı kontrolü
+* Görüntüleme veya bekleme mesajı
+* PDF indirme
+
+---
+
+### 🧾 **Tahlil Sonuçları Görüntüleme Sistemi – Pseudocode**
+
+```plaintext
+BAŞLA // 1. Kimlik Doğrulama
+
+    YAZ "TC Kimlik Numaranızı girin:"
+    OKU tc_kimlik
+    YAZ "Şifrenizi girin:"
+    OKU sifre
+
+    EĞER kullanici_dogrula(tc_kimlik, sifre) İSE
+        YAZ "Giriş başarılı."
+    DEĞİLSE
+        YAZ "Kimlik doğrulama başarısız. Giriş reddedildi."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 2. Tahlil Varlığı Kontrolü
+
+    tahliller ← tahlil_listesi_getir(tc_kimlik)
+
+    EĞER tahliller ≠ boş İSE
+        YAZ "Mevcut tahliller:"
+        YAZ tahliller
+        YAZ "Bir tahlil seçiniz:"
+        OKU secilen_tahlil
+    DEĞİLSE
+        YAZ "Herhangi bir tahlil kaydınız bulunmamaktadır."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 3. Sonuç Hazır mı Kontrolü
+
+    EĞER tahlil_sonucu_hazir_mi(secilen_tahlil) İSE
+        YAZ "Tahlil sonucu hazır. Görüntüleniyor..."
+        sonuc ← tahlil_sonucu_getir(secilen_tahlil)
+        YAZ sonuc
+    DEĞİLSE
+        YAZ "Tahlil sonucu henüz hazır değil. Lütfen daha sonra tekrar deneyin."
+        DUR
+    SON
+
+BİTİR
+
+
+BAŞLA // 4. PDF İndirme
+
+    YAZ "Sonucu PDF olarak indirmek ister misiniz? (E/H)"
+    OKU cevap
+
+    EĞER cevap = "E" VEYA cevap = "e" İSE
+        pdf_olustur(secilen_tahlil)
+        YAZ "PDF dosyası indirildi."
+    DEĞİLSE
+        YAZ "PDF indirimi iptal edildi."
+    SON
+
+BİTİR
+```
+
+---
+
+### 📌 Açıklamalar:
+
+* `kullanici_dogrula()`, `tahlil_listesi_getir()`, `tahlil_sonucu_getir()`, `pdf_olustur()` gibi işlemler arka uçta sistemin sunduğu servislerle çalışır.
+* Tahlil sonucu hazır değilse, sistem kullanıcıyı bilgilendirip işlemi sonlandırır.
+* Sonuç hazırsa, kullanıcıya gösterilir ve isterse PDF olarak da indirebilir.
+
+---
+
+İstersen bu yapıyı da akış diyagramı (DOT) formatına çevirebilir veya başka modüllerle bütünleştirebilirim. Devam edelim mi?
+
+ Sistem A¸cıklaması
+ Hastanede randevu alma ve tahlil sonu¸clarına eri¸sim sistemini modelleyin.
+ Sistem Gereksinimleri:
+ Hasta kimlik do˘grulama (TC No)
+ ˙
+ I¸slem se¸cimi: 1-Randevu Al, 2-Tahlil Sonucu G¨or (ko¸sul)
+ Randevu mod¨ul¨u: Poliklinik se¸cimi, doktor listesi, uygun saatler
+ (d¨ong¨u)
+ Randevu onayı ve SMS g¨onderimi
+ Tahlil mod¨ul¨u: Tahlil var mı kontrol¨u (ko¸sul)
+ Sonu¸c hazır mı kontrol¨u (ko¸sul)
+ Sonu¸c g¨or¨unt¨uleme veya bekleme mesajı
+ Sonu¸cları PDF indir se¸cene˘gi
+ Ba¸ska i¸slem yapmak ister misiniz? (d¨ong¨u)
+Elbette! Verdiğin sistem açıklamasına göre, hastane randevu ve tahlil sonuçları erişim sistemini içeren kapsamlı bir pseudocode taslağı hazırladım. Sistemin tüm gereksinimlerini ve döngü/koşul yapılarını kapsıyor.
+🏥 Hastane Randevu ve Tahlil Sonuçları Erişim Sistemi – Pseudocode
+BAŞLA
+
+    // Hasta Kimlik Doğrulama
+    YAZ "TC Kimlik Numaranızı girin:"
+    OKU tc_kimlik
+    YAZ "Şifrenizi girin:"
+    OKU sifre
+
+    EĞER kullanici_dogrula(tc_kimlik, sifre) DEĞİLSE
+        YAZ "Kimlik doğrulama başarısız. İşlem sonlandırıldı."
+        DUR
+    SON
+
+    // İşlem Seçimi Döngüsü
+    DÖNGÜ TRUE
+
+        YAZ "Lütfen yapmak istediğiniz işlemi seçin:"
+        YAZ "1 - Randevu Al"
+        YAZ "2 - Tahlil Sonucu Görüntüle"
+        OKU islem_secimi
+
+        EĞER islem_secimi = 1 İSE
+            // Randevu Modülü
+            YAZ "Poliklinik seçiniz:"
+            poliklinikler ← poliklinik_listesi_getir()
+            YAZ poliklinikler
+            OKU secilen_poliklinik
+
+            doktorlar ← doktor_listesi_getir(secilen_poliklinik)
+            YAZ "Doktor listesi:"
+            YAZ doktorlar
+            OKU secilen_doktor
+
+            // Uygun saatler döngüsü
+            DÖNGÜ TRUE
+                saatler ← uygun_saatler_getir(secilen_doktor)
+                EĞER saatler = boş İSE
+                    YAZ "Uygun saat bulunamadı. Başka doktor seçmek ister misiniz? (E/H)"
+                    OKU cevap
+                    EĞER cevap = "E" VEYA cevap = "e" İSE
+                        YAZ "Doktor seçiniz:"
+                        YAZ doktorlar
+                        OKU secilen_doktor
+                    DEĞİLSE
+                        DUR
+                    SON
+                DEĞİLSE
+                    YAZ "Uygun saatler:"
+                    YAZ saatler
+                    YAZ "Bir saat seçiniz:"
+                    OKU secilen_saat
+                    ÇIK
+                SON
+            SONDÖNGÜ
+
+            // Randevu Onayı
+            YAZ "Randevuyu onaylıyor musunuz? (E/H)"
+            OKU onay
+            EĞER onay = "E" VEYA onay = "e" İSE
+                randevu_kaydet(tc_kimlik, secilen_doktor, secilen_saat)
+                sms_gonder(tc_kimlik, secilen_doktor, secilen_saat)
+                YAZ "Randevunuz kaydedildi ve SMS gönderildi."
+            DEĞİLSE
+                YAZ "Randevu iptal edildi."
+            SON
+
+        DEĞİLSE EĞER islem_secimi = 2 İSE
+            // Tahlil Modülü
+            tahliller ← tahlil_listesi_getir(tc_kimlik)
+            EĞER tahliller = boş İSE
+                YAZ "Herhangi bir tahlil kaydınız bulunmamaktadır."
+                DUR
+            SON
+
+            YAZ "Tahlil listesi:"
+            YAZ tahliller
+            YAZ "Bir tahlil seçiniz:"
+            OKU secilen_tahlil
+
+            EĞER tahlil_sonucu_hazir_mi(secilen_tahlil) İSE
+                sonuc ← tahlil_sonucu_getir(secilen_tahlil)
+                YAZ "Tahlil sonucu:"
+                YAZ sonuc
+
+                YAZ "Sonucu PDF olarak indirmek ister misiniz? (E/H)"
+                OKU pdf_cevap
+                EĞER pdf_cevap = "E" VEYA pdf_cevap = "e" İSE
+                    pdf_olustur(secilen_tahlil)
+                    YAZ "PDF indirildi."
+                DEĞİLSE
+                    YAZ "PDF indirimi iptal edildi."
+                SON
+
+            DEĞİLSE
+                YAZ "Tahlil sonucu henüz hazır değil. Lütfen daha sonra tekrar deneyin."
+            SON
+
+        DEĞİLSE
+            YAZ "Geçersiz işlem seçimi."
+        SON
+
+        // Başka işlem yapmak isteği
+        YAZ "Başka işlem yapmak ister misiniz? (E/H)"
+        OKU devam
+        EĞER devam = "H" VEYA devam = "h" İSE
+            DUR
+        SON
+
+    SONDÖNGÜ
+
+BİTİR
+
+📌 Sistem Özeti:
+
+Kimlik doğrulama sonrası kullanıcı istediği işlemi seçer: randevu alma veya tahlil sonucu görüntüleme.
+
+Randevu modülünde poliklinik, doktor ve uygun saatler dinamik olarak listelenir.
+
+Uygun saat yoksa kullanıcı başka doktor seçebilir.
+
+Onay halinde randevu kaydedilir ve SMS gönderilir.
+
+Tahlil modülünde tahlil varlığı ve sonuç durumu kontrol edilir, sonuç varsa gösterilir, PDF indirilebilir.
+
+Kullanıcı isterse tekrar işlem yapabilir, istemezse sistemden çıkar.
+
+İstersen bunu akış diyagramı veya DOT formatına da çevirebiliriz. Yardımcı olayım mı?
+ Mod¨ul 1: Randevu Alma
+ “Hastane randevu sistemi i¸cin algoritma: kimlik do˘grulama, poliklinik
+ se¸cimi, doktor listesi g¨or¨unt¨uleme, uygun saatleri g¨osterme, randevu
+ onaylama ve SMS g¨onderme. Pseudocode yaz.
+Tabii! İşte hastane randevu sistemi için istenilen adımları içeren detaylı pseudocode:
+BAŞLA
+
+    // Kimlik Doğrulama
+    YAZ "TC Kimlik Numaranızı giriniz:"
+    OKU tc_kimlik
+    YAZ "Şifrenizi giriniz:"
+    OKU sifre
+
+    EĞER kullanici_dogrula(tc_kimlik, sifre) İSE
+        YAZ "Giriş başarılı."
+    DEĞİLSE
+        YAZ "Kimlik doğrulama başarısız."
+        DUR
+    SON
+
+    // Poliklinik Seçimi
+    poliklinikler ← poliklinik_listesi_getir()
+    YAZ "Poliklinikler:"
+    YAZ poliklinikler
+    YAZ "Lütfen poliklinik seçiniz:"
+    OKU secilen_poliklinik
+
+    // Doktor Listesi Görüntüleme
+    doktorlar ← doktor_listesi_getir(secilen_poliklinik)
+    YAZ "Doktorlar:"
+    YAZ doktorlar
+    YAZ "Lütfen doktor seçiniz:"
+    OKU secilen_doktor
+
+    // Uygun Saatleri Gösterme
+    saatler ← uygun_saatler_getir(secilen_doktor)
+    EĞER saatler ≠ boş İSE
+        YAZ "Uygun saatler:"
+        YAZ saatler
+        YAZ "Lütfen randevu saati seçiniz:"
+        OKU secilen_saat
+    DEĞİLSE
+        YAZ "Seçilen doktor için uygun saat bulunmamaktadır."
+        DUR
+    SON
+
+    // Randevu Onaylama
+    YAZ "Randevunuzu onaylıyor musunuz? (E/H)"
+    OKU onay
+
+    EĞER onay = "E" VEYA onay = "e" İSE
+        randevu_kaydet(tc_kimlik, secilen_doktor, secilen_saat)
+        sms_gonder(tc_kimlik, secilen_doktor, secilen_saat)
+        YAZ "Randevunuz başarıyla oluşturuldu ve SMS gönderildi."
+    DEĞİLSE
+        YAZ "Randevu iptal edildi."
+    SON
+
+BİTİR
+
+İstersen başka modüller veya detaylar için de yardımcı olabilirim!
+ Mod¨ul 2: Tahlil Sonu¸cları
+ “Tahlil sonucu g¨or¨unt¨uleme sistemi: kimlik do˘grulama, tahlil varlı˘gı
+ kontrol¨u, sonu¸c hazır mı kontrol¨u, g¨or¨unt¨uleme veya bekleme mesajı, PDF
+ indirme. Pseudocode yaz.”
+Tabii! İşte Tahlil Sonuçları Görüntüleme Sistemi için istediğin pseudocode:
+BAŞLA
+
+    // Kimlik Doğrulama
+    YAZ "TC Kimlik Numaranızı giriniz:"
+    OKU tc_kimlik
+    YAZ "Şifrenizi giriniz:"
+    OKU sifre
+
+    EĞER kullanici_dogrula(tc_kimlik, sifre) İSE
+        YAZ "Giriş başarılı."
+    DEĞİLSE
+        YAZ "Kimlik doğrulama başarısız."
+        DUR
+    SON
+
+    // Tahlil Varlığı Kontrolü
+    tahliller ← tahlil_listesi_getir(tc_kimlik)
+    EĞER tahliller = boş İSE
+        YAZ "Kayıtlı tahlil sonucu bulunmamaktadır."
+        DUR
+    SON
+
+    YAZ "Mevcut tahliller:"
+    YAZ tahliller
+    YAZ "Bir tahlil seçiniz:"
+    OKU secilen_tahlil
+
+    // Sonuç Hazır mı Kontrolü
+    EĞER tahlil_sonucu_hazir_mi(secilen_tahlil) İSE
+        sonuc ← tahlil_sonucu_getir(secilen_tahlil)
+        YAZ "Tahlil Sonucu:"
+        YAZ sonuc
+    DEĞİLSE
+        YAZ "Tahlil sonucu henüz hazır değil, lütfen daha sonra tekrar deneyin."
+        DUR
+    SON
+
+    // PDF İndirme
+    YAZ "Sonucu PDF olarak indirmek ister misiniz? (E/H)"
+    OKU cevap
+
+    EĞER cevap = "E" VEYA cevap = "e" İSE
+        pdf_olustur(secilen_tahlil)
+        YAZ "PDF indirildi."
+    DEĞİLSE
+        YAZ "PDF indirimi iptal edildi."
+    SON
+
+BİTİR
+
+İstersen bu yapıyı daha da detaylandırabilir veya farklı formatta sunabilirim!
+Son Adım: Birle¸stirme
+ Ana men¨u ile iki mod¨ul¨u birle¸stirin
+ DOT kodunda her mod¨ul¨u ayrı subgraph olarak d¨uzenleyebilirsiniz
+Tabii! Aşağıda, Randevu Alma ve Tahlil Sonuçları Görüntüleme modüllerini içeren, ana menüden seçim yaparak ilerleyen sistemin Graphviz DOT formatında kodunu, her modülü ayrı subgraph olarak düzenlenmiş şekilde hazırladım.
+digraph HastaneSistemi {
+    rankdir=TB;
+    node [shape=box];
+
+    // Ana Menü
+    AnaMenu [label="Ana Menü:\n1 - Randevu Al\n2 - Tahlil Sonucu Gör\nÇıkış için H"];
+
+    // -------- Subgraph: Randevu Alma --------
+    subgraph cluster_randevu {
+        label="Modül 1: Randevu Alma";
+        style=dashed;
+
+        R_KimlikDogrula [label="Kimlik Doğrulama"];
+        R_PoliklinikSec [label="Poliklinik Seçimi"];
+        R_DoktorListe [label="Doktor Listesi Görüntüle"];
+        R_UygunSaatler [label="Uygun Saatleri Göster"];
+        R_RandevuOnay [label="Randevu Onaylama"];
+        R_SMS [label="SMS Gönderimi"];
+        R_Bitir [label="Randevu İşlemi Bitti"];
+
+        R_KimlikDogrula -> R_PoliklinikSec [label="Başarılı"];
+        R_KimlikDogrula -> AnaMenu [label="Başarısız"];
+        R_PoliklinikSec -> R_DoktorListe;
+        R_DoktorListe -> R_UygunSaatler;
+        R_UygunSaatler -> R_RandevuOnay [label="Saat var"];
+        R_UygunSaatler -> R_Bitir [label="Saat yok"];
+        R_RandevuOnay -> R_SMS [label="Onaylandı"];
+        R_RandevuOnay -> R_Bitir [label="İptal"];
+        R_SMS -> R_Bitir;
+        R_Bitir -> AnaMenu [label="Ana Menüye Dön"];
+    }
+
+    // -------- Subgraph: Tahlil Sonuçları --------
+    subgraph cluster_tahlil {
+        label="Modül 2: Tahlil Sonuçları";
+        style=dashed;
+
+        T_KimlikDogrula [label="Kimlik Doğrulama"];
+        T_TahlilVarlikKontrol [label="Tahlil Varlığı Kontrolü"];
+        T_SonucHazirKontrol [label="Sonuç Hazır mı?"];
+        T_SonucGoruntule [label="Sonuç Görüntüleme"];
+        T_BeklemeMesaji [label="Bekleme Mesajı"];
+        T_PDFIndirme [label="PDF İndirme"];
+        T_Bitir [label="Tahlil İşlemi Bitti"];
+
+        T_KimlikDogrula -> T_TahlilVarlikKontrol [label="Başarılı"];
+        T_KimlikDogrula -> AnaMenu [label="Başarısız"];
+        T_TahlilVarlikKontrol -> T_SonucHazirKontrol [label="Tahlil var"];
+        T_TahlilVarlikKontrol -> T_Bitir [label="Yok"];
+        T_SonucHazirKontrol -> T_SonucGoruntule [label="Hazır"];
+        T_SonucHazirKontrol -> T_BeklemeMesaji [label="Hazır değil"];
+        T_SonucGoruntule -> T_PDFIndirme;
+        T_PDFIndirme -> T_Bitir;
+        T_BeklemeMesaji -> T_Bitir;
+        T_Bitir -> AnaMenu [label="Ana Menüye Dön"];
+    }
+
+    // Ana Menü'den modüllere yönlendirme
+    AnaMenu -> R_KimlikDogrula [label="1"];
+    AnaMenu -> T_KimlikDogrula [label="2"];
+}
+
+Açıklama:
+
+Ana Menü kullanıcıdan işlem seçimi alır:
+
+1 → Randevu Alma modülüne,
+
+2 → Tahlil Sonuçları modülüne yönlendirme yapar.
+
+Her modül kendi içinde akışını subgraph ile gösterir.
+
+Her modülde kimlik doğrulama başarısızsa ana menüye döner.
+
+Modüller tamamlandığında kullanıcı ana menüye geri döner ve yeni işlem seçebilir.
+
+İstersen bu DOT kodunu çalıştırabileceğin bir ortamda (örneğin webgraphviz.com
+) görselleştirebilirsin. Başka soruların veya geliştirmeler istersen söyleyebilirsin!
+Modül 1 ve Modül 2 yi birleştiren pseudocode u birleştir
+Tabii! İşte Modül 1 (Randevu Alma) ile Modül 2 (Tahlil Sonuçları Görüntüleme) sistemlerini, ana menüden seçim yapılarak çalışan tek bir pseudocode'da birleştirdim:
+BAŞLA
+
+    // Kimlik Doğrulama
+    YAZ "TC Kimlik Numaranızı giriniz:"
+    OKU tc_kimlik
+    YAZ "Şifrenizi giriniz:"
+    OKU sifre
+
+    EĞER kullanici_dogrula(tc_kimlik, sifre) DEĞİLSE
+        YAZ "Kimlik doğrulama başarısız."
+        DUR
+    SON
+
+    DÖNGÜ TRUE
+        YAZ "Yapmak istediğiniz işlemi seçin:"
+        YAZ "1 - Randevu Al"
+        YAZ "2 - Tahlil Sonucu Görüntüle"
+        YAZ "H - Çıkış"
+        OKU islem_secimi
+
+        EĞER islem_secimi = "1" İSE
+            // --- Randevu Alma Modülü ---
+            poliklinikler ← poliklinik_listesi_getir()
+            YAZ "Poliklinikler:"
+            YAZ poliklinikler
+            YAZ "Poliklinik seçiniz:"
+            OKU secilen_poliklinik
+
+            doktorlar ← doktor_listesi_getir(secilen_poliklinik)
+            YAZ "Doktorlar:"
+            YAZ doktorlar
+            YAZ "Doktor seçiniz:"
+            OKU secilen_doktor
+
+            saatler ← uygun_saatler_getir(secilen_doktor)
+            EĞER saatler = boş İSE
+                YAZ "Uygun saat bulunamadı. İşlem iptal edildi."
+                DEVAM ET
+            SON
+
+            YAZ "Uygun saatler:"
+            YAZ saatler
+            YAZ "Randevu saati seçiniz:"
+            OKU secilen_saat
+
+            YAZ "Randevuyu onaylıyor musunuz? (E/H)"
+            OKU onay
+            EĞER onay = "E" VEYA onay = "e" İSE
+                randevu_kaydet(tc_kimlik, secilen_doktor, secilen_saat)
+                sms_gonder(tc_kimlik, secilen_doktor, secilen_saat)
+                YAZ "Randevunuz başarıyla oluşturuldu ve SMS gönderildi."
+            DEĞİLSE
+                YAZ "Randevu iptal edildi."
+            SON
+
+        DEĞİLSE EĞER islem_secimi = "2" İSE
+            // --- Tahlil Sonuçları Modülü ---
+            tahliller ← tahlil_listesi_getir(tc_kimlik)
+            EĞER tahliller = boş İSE
+                YAZ "Kayıtlı tahlil sonucu bulunmamaktadır."
+                DEVAM ET
+            SON
+
+            YAZ "Tahliller:"
+            YAZ tahliller
+            YAZ "Bir tahlil seçiniz:"
+            OKU secilen_tahlil
+
+            EĞER tahlil_sonucu_hazir_mi(secilen_tahlil) İSE
+                sonuc ← tahlil_sonucu_getir(secilen_tahlil)
+                YAZ "Tahlil Sonucu:"
+                YAZ sonuc
+
+                YAZ "Sonucu PDF olarak indirmek ister misiniz? (E/H)"
+                OKU pdf_cevap
+                EĞER pdf_cevap = "E" VEYA pdf_cevap = "e" İSE
+                    pdf_olustur(secilen_tahlil)
+                    YAZ "PDF indirildi."
+                DEĞİLSE
+                    YAZ "PDF indirimi iptal edildi."
+                SON
+            DEĞİLSE
+                YAZ "Tahlil sonucu henüz hazır değil. Lütfen daha sonra tekrar deneyin."
+            SON
+
+        DEĞİLSE EĞER islem_secimi = "H" VEYA islem_secimi = "h" İSE
+            YAZ "Sistemden çıkılıyor. İyi günler!"
+            DUR
+
+        DEĞİLSE
+            YAZ "Geçersiz seçim. Lütfen tekrar deneyin."
+        SON
+
+    SONDÖNGÜ
+
+BİTİR
+
+Bu kodda:
+
+Öncelikle kullanıcı kimlik doğrulaması yapılır.
+
+Başarılı ise kullanıcıya işlemler sunulur.
+
+İsterse randevu alabilir veya tahlil sonucunu görüntüleyebilir.
+
+İşlem sonunda ana menüye döner.
+
+“H” seçeneği ile sistemden çıkabilir.
+
+Daha fazla geliştirme veya başka modüller için söyleyebilirsin!
+Şimdi bunu DOT koduna çevir
+Tabii! İşte yukarıdaki birleşik pseudocode’u Graphviz DOT formatına, ana menü ve iki modülü subgraph olarak ayırıp, karar noktalarında EVET/HAYIR etiketleriyle çevirdim:
+digraph HastaneSistemi {
+    rankdir=TB;
+    node [shape=box];
+
+    // Ana Menü
+    AnaMenu [label="Ana Menü:\n1 - Randevu Al\n2 - Tahlil Sonucu Görüntüle\nH - Çıkış"];
+
+    // -------------- Modül 1: Randevu Alma --------------
+    subgraph cluster_randevu {
+        label="Modül 1: Randevu Alma";
+        style=dashed;
+
+        R_PoliklinikSec [label="Poliklinik Seçimi"];
+        R_DoktorListe [label="Doktor Listesi Görüntüle"];
+        R_UygunSaatler [label="Uygun Saatleri Göster"];
+        R_SaatVarKontrol [label="Saat var mı?"];
+        R_SaatYok [label="Uygun saat bulunamadı"];
+        R_SaatVar [label="Uygun saatler listelendi"];
+        R_SaatSecim [label="Randevu Saati Seçimi"];
+        R_OnayKontrol [label="Randevuyu onaylıyor musunuz?"];
+        R_OnayVar [label="Randevu Kaydet & SMS Gönder"];
+        R_OnayYok [label="Randevu iptal edildi"];
+        R_Bitir [label="Randevu İşlemi Bitti"];
+
+        R_PoliklinikSec -> R_DoktorListe;
+        R_DoktorListe -> R_UygunSaatler;
+        R_UygunSaatler -> R_SaatVarKontrol;
+
+        R_SaatVarKontrol -> R_SaatVar [label="EVET"];
+        R_SaatVarKontrol -> R_SaatYok [label="HAYIR"];
+
+        R_SaatYok -> R_Bitir;
+        R_SaatVar -> R_SaatSecim;
+        R_SaatSecim -> R_OnayKontrol;
+
+        R_OnayKontrol -> R_OnayVar [label="EVET"];
+        R_OnayKontrol -> R_OnayYok [label="HAYIR"];
+
+        R_OnayVar -> R_Bitir;
+        R_OnayYok -> R_Bitir;
+
+        R_Bitir -> AnaMenu [label="Ana Menüye Dön"];
+    }
+
+    // -------------- Modül 2: Tahlil Sonuçları --------------
+    subgraph cluster_tahlil {
+        label="Modül 2: Tahlil Sonuçları";
+        style=dashed;
+
+        T_TahlilVarKontrol [label="Tahlil var mı?"];
+        T_TahlilYok [label="Tahlil bulunamadı"];
+        T_TahlilVar [label="Tahlil listelendi"];
+        T_TahlilSecim [label="Tahlil Seçimi"];
+        T_SonucHazirKontrol [label="Sonuç hazır mı?"];
+        T_SonucHazir [label="Sonuç görüntüle"];
+        T_SonucBekle [label="Bekleme mesajı"];
+        T_PDFIndirKontrol [label="PDF indirilsin mi?"];
+        T_PDFIndir [label="PDF oluşturuldu"];
+        T_PDFIptal [label="PDF indirimi iptal edildi"];
+        T_Bitir [label="Tahlil İşlemi Bitti"];
+
+        T_TahlilVarKontrol -> T_TahlilVar [label="EVET"];
+        T_TahlilVarKontrol -> T_TahlilYok [label="HAYIR"];
+
+        T_TahlilYok -> T_Bitir;
+        T_TahlilVar -> T_TahlilSecim;
+        T_TahlilSecim -> T_SonucHazirKontrol;
+
+        T_SonucHazirKontrol -> T_SonucHazir [label="EVET"];
+        T_SonucHazirKontrol -> T_SonucBekle [label="HAYIR"];
+
+        T_SonucHazir -> T_PDFIndirKontrol;
+        T_PDFIndirKontrol -> T_PDFIndir [label="EVET"];
+        T_PDFIndirKontrol -> T_PDFIptal [label="HAYIR"];
+
+        T_PDFIndir -> T_Bitir;
+        T_PDFIptal -> T_Bitir;
+        T_SonucBekle -> T_Bitir;
+
+        T_Bitir -> AnaMenu [label="Ana Menüye Dön"];
+    }
+
+    // Ana Menüden modüllere yönlendirme
+    AnaMenu -> R_PoliklinikSec [label="1"];
+    AnaMenu -> T_TahlilVarKontrol [label="2"];
+    AnaMenu -> Çıkış [label="H"];
+
+    // Çıkış düğümü
+    Çıkış [label="Sistemden çıkılıyor.\nİyi günler!", shape=oval];
+}
+Açıklama:
+
+Ana Menü den 1 seçilince Randevu Alma modülüne, 2 seçilince Tahlil Sonuçları modülüne geçiş oluyor.
+
+Her modül kendi subgraph olarak ayrılmış ve akış net şekilde gösterilmiş.
+
+Karar noktalarında “EVET” ve “HAYIR” etiketleri var.
+
+Çıkış seçeneği H ile sistemi sonlandırıyor.
+
+Dilersen bu DOT kodunu webgraphviz.com
+ veya Graphviz ile kolayca görselleştirebilirsin. Yardımcı olmamı istediğin başka şey var mı?
+bana bunu 5-6 satırda kısaca açıklar mısın
+Tabii! İşte kısaca özet:
+
+Sistem, kullanıcıyı kimlik doğrulama ile başlatır ve ana menüden randevu alma veya tahlil sonucu görüntüleme seçeneklerini sunar. Randevu modülünde kullanıcı poliklinik, doktor ve uygun saat seçerek randevuyu onaylar ve SMS alır. Tahlil modülünde ise tahlil varlığı ve sonuç hazır olup olmadığı kontrol edilir, sonuç gösterilir ve isteğe bağlı PDF indirme yapılır. Her modül işlem sonunda ana menüye döner ve kullanıcı istediği işlemi tekrar seçebilir veya sistemden çıkabilir.
