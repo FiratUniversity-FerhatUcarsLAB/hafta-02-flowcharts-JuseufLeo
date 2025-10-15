@@ -1,0 +1,90 @@
+digraph HastaneSistemi {
+    rankdir=TB;
+    node [shape=box];
+
+    // Ana Menü
+    AnaMenu [label="Ana Menü:\n1 - Randevu Al\n2 - Tahlil Sonucu Görüntüle\nH - Çıkış"];
+
+    // -------------- Modül 1: Randevu Alma --------------
+    subgraph cluster_randevu {
+        label="Modül 1: Randevu Alma";
+        style=dashed;
+
+        R_PoliklinikSec [label="Poliklinik Seçimi"];
+        R_DoktorListe [label="Doktor Listesi Görüntüle"];
+        R_UygunSaatler [label="Uygun Saatleri Göster"];
+        R_SaatVarKontrol [label="Saat var mı?"];
+        R_SaatYok [label="Uygun saat bulunamadı"];
+        R_SaatVar [label="Uygun saatler listelendi"];
+        R_SaatSecim [label="Randevu Saati Seçimi"];
+        R_OnayKontrol [label="Randevuyu onaylıyor musunuz?"];
+        R_OnayVar [label="Randevu Kaydet & SMS Gönder"];
+        R_OnayYok [label="Randevu iptal edildi"];
+        R_Bitir [label="Randevu İşlemi Bitti"];
+
+        R_PoliklinikSec -> R_DoktorListe;
+        R_DoktorListe -> R_UygunSaatler;
+        R_UygunSaatler -> R_SaatVarKontrol;
+
+        R_SaatVarKontrol -> R_SaatVar [label="EVET"];
+        R_SaatVarKontrol -> R_SaatYok [label="HAYIR"];
+
+        R_SaatYok -> R_Bitir;
+        R_SaatVar -> R_SaatSecim;
+        R_SaatSecim -> R_OnayKontrol;
+
+        R_OnayKontrol -> R_OnayVar [label="EVET"];
+        R_OnayKontrol -> R_OnayYok [label="HAYIR"];
+
+        R_OnayVar -> R_Bitir;
+        R_OnayYok -> R_Bitir;
+
+        R_Bitir -> AnaMenu [label="Ana Menüye Dön"];
+    }
+
+    // -------------- Modül 2: Tahlil Sonuçları --------------
+    subgraph cluster_tahlil {
+        label="Modül 2: Tahlil Sonuçları";
+        style=dashed;
+
+        T_TahlilVarKontrol [label="Tahlil var mı?"];
+        T_TahlilYok [label="Tahlil bulunamadı"];
+        T_TahlilVar [label="Tahlil listelendi"];
+        T_TahlilSecim [label="Tahlil Seçimi"];
+        T_SonucHazirKontrol [label="Sonuç hazır mı?"];
+        T_SonucHazir [label="Sonuç görüntüle"];
+        T_SonucBekle [label="Bekleme mesajı"];
+        T_PDFIndirKontrol [label="PDF indirilsin mi?"];
+        T_PDFIndir [label="PDF oluşturuldu"];
+        T_PDFIptal [label="PDF indirimi iptal edildi"];
+        T_Bitir [label="Tahlil İşlemi Bitti"];
+
+        T_TahlilVarKontrol -> T_TahlilVar [label="EVET"];
+        T_TahlilVarKontrol -> T_TahlilYok [label="HAYIR"];
+
+        T_TahlilYok -> T_Bitir;
+        T_TahlilVar -> T_TahlilSecim;
+        T_TahlilSecim -> T_SonucHazirKontrol;
+
+        T_SonucHazirKontrol -> T_SonucHazir [label="EVET"];
+        T_SonucHazirKontrol -> T_SonucBekle [label="HAYIR"];
+
+        T_SonucHazir -> T_PDFIndirKontrol;
+        T_PDFIndirKontrol -> T_PDFIndir [label="EVET"];
+        T_PDFIndirKontrol -> T_PDFIptal [label="HAYIR"];
+
+        T_PDFIndir -> T_Bitir;
+        T_PDFIptal -> T_Bitir;
+        T_SonucBekle -> T_Bitir;
+
+        T_Bitir -> AnaMenu [label="Ana Menüye Dön"];
+    }
+
+    // Ana Menüden modüllere yönlendirme
+    AnaMenu -> R_PoliklinikSec [label="1"];
+    AnaMenu -> T_TahlilVarKontrol [label="2"];
+    AnaMenu -> Çıkış [label="H"];
+
+    // Çıkış düğümü
+    Çıkış [label="Sistemden çıkılıyor.\nİyi günler!", shape=oval];
+}
