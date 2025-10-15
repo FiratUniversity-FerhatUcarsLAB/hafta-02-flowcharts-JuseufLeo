@@ -1,0 +1,111 @@
+digraph DersKayitSistemi {
+    rankdir=TB;
+    node [shape=box];
+
+    // Başlangıç
+    Basla [label="BAŞLA"];
+
+    // Giriş
+    GirisNo [label="Öğrenci No gir"];
+    GirisSifre [label="Şifre gir"];
+    Dogrula [label="Öğrenci doğrulama"];
+    DogrulaShape [shape=diamond];
+    
+    GirisBasarili [label="Giriş başarılı"];
+    GirisBasarisiz [label="Giriş başarısız"];
+
+    // Döngü başı
+    DersListesi [label="Ders listesi göster"];
+    DersSecim [label="Ders seç veya Ç çıkış"];
+    
+    CikisKontrol [label="Çıkmak istiyor musun?"];
+    CikisKontrolShape [shape=diamond];
+    
+    KayitOzeti [label="Kayıt özeti göster"];
+    KayitOnay [label="Kayıt onayla?"];
+    KayitOnayShape [shape=diamond];
+    KayitBasarili [label="Kayıt tamamlandı"];
+    KayitIptal [label="Kayıt iptal"];
+
+    // Ders bilgisi ve kontroller
+    DersBilgi [label="Seçilen ders bilgisi al"];
+    
+    KontenjanKontrol [label="Kontenjan dolu mu?"];
+    KontenjanKontrolShape [shape=diamond];
+    OnKosulKontrol [label="Ön koşullar tamam mı?"];
+    OnKosulKontrolShape [shape=diamond];
+    ZamanCakismaKontrol [label="Zaman çakışması var mı?"];
+    ZamanCakismaKontrolShape [shape=diamond];
+    KrediLimitKontrol [label="Kredi limiti aşılır mı?"];
+    KrediLimitKontrolShape [shape=diamond];
+    DanismanOnayKontrol [label="Danışman onayı gerekli mi?"];
+    DanismanOnayKontrolShape [shape=diamond];
+    DanismanOnayAlindi [label="Danışman onayı alındı?"];
+    DanismanOnayAlindiShape [shape=diamond];
+
+    DersEkle [label="Ders ekle ve kredi güncelle"];
+    DersCikarSoru [label="Ders çıkarma yap?"];
+    DersCikarSoruShape [shape=diamond];
+    DersCikarSecim [label="Çıkarılacak dersi seç"];
+    DersCikarYap [label="Ders çıkar ve kredi güncelle"];
+    DersCikarYok [label="Seçilen ders yok"];
+
+    // Döngüye dön
+    DonguDevam [label="Derse dön"];
+
+    // Bitiş
+    Bitir [label="BİTİR", shape=oval];
+
+    // Kenar bağlantıları
+    Basla -> GirisNo;
+    GirisNo -> GirisSifre;
+    GirisSifre -> DogrulaShape;
+    DogrulaShape -> GirisBasarili [label="EVET"];
+    DogrulaShape -> GirisBasarisiz [label="HAYIR"];
+    GirisBasarisiz -> Bitir;
+
+    GirisBasarili -> DersListesi;
+    DersListesi -> DersSecim;
+    DersSecim -> CikisKontrolShape;
+    CikisKontrolShape -> KayitOzeti [label="EVET"];
+    CikisKontrolShape -> DersBilgi [label="HAYIR"];
+
+    KayitOzeti -> KayitOnayShape;
+    KayitOnayShape -> KayitBasarili [label="EVET"];
+    KayitOnayShape -> KayitIptal [label="HAYIR"];
+    KayitBasarili -> Bitir;
+    KayitIptal -> DersListesi;
+
+    DersBilgi -> KontenjanKontrolShape;
+
+    KontenjanKontrolShape -> DersEkle [label="HAYIR"];
+    KontenjanKontrolShape -> DersListesi [label="EVET"];
+
+    DersEkle -> OnKosulKontrolShape;
+    OnKosulKontrolShape -> DersListesi [label="HAYIR"];
+    OnKosulKontrolShape -> ZamanCakismaKontrolShape [label="EVET"];
+
+    ZamanCakismaKontrolShape -> DersListesi [label="EVET"];
+    ZamanCakismaKontrolShape -> KrediLimitKontrolShape [label="HAYIR"];
+
+    KrediLimitKontrolShape -> DersListesi [label="EVET"];
+    KrediLimitKontrolShape -> DanismanOnayKontrolShape [label="HAYIR"];
+
+    DanismanOnayKontrolShape -> DonguDevam [label="HAYIR"];
+    DanismanOnayKontrolShape -> DanismanOnayAlindiShape [label="EVET"];
+
+    DanismanOnayAlindiShape -> DersListesi [label="EVET"];
+    DanismanOnayAlindiShape -> DersListesi [label="HAYIR"];
+
+    DonguDevam -> DersCikarSoruShape;
+
+    DersCikarSoruShape -> DersCikarSecim [label="EVET"];
+    DersCikarSoruShape -> DersListesi [label="HAYIR"];
+
+    DersCikarSecim -> DersCikarYap;
+    DersCikarYap -> DersListesi;
+
+    DersCikarSecim -> DersCikarYok;
+
+    DersCikarYok -> DersListesi;
+}
