@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="469pt" height="1080pt" viewBox="0.00 0.00 469.00 1080.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1075.75)">
+<title>ATM</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1075.75 464.58,-1075.75 464.58,4 -4,4"/>
+<!-- Start -->
+<g id="node1" class="node">
+<title>Start</title>
+<ellipse fill="none" stroke="black" cx="167.45" cy="-1053.75" rx="42.15" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="167.45" y="-1049.55" font-family="Times,serif" font-size="14.00">BAŞLA</text>
+</g>
+<!-- SetVars -->
+<g id="node2" class="node">
+<title>SetVars</title>
+<path fill="none" stroke="black" d="M217.94,-998.75C217.94,-998.75 116.95,-998.75 116.95,-998.75 110.95,-998.75 104.95,-992.75 104.95,-986.75 104.95,-986.75 104.95,-918.75 104.95,-918.75 104.95,-912.75 110.95,-906.75 116.95,-906.75 116.95,-906.75 217.94,-906.75 217.94,-906.75 223.94,-906.75 229.94,-912.75 229.94,-918.75 229.94,-918.75 229.94,-986.75 229.94,-986.75 229.94,-992.75 223.94,-998.75 217.94,-998.75"/>
+<text xml:space="preserve" text-anchor="middle" x="167.45" y="-982.15" font-family="Times,serif" font-size="14.00">PIN = 1234</text>
+<text xml:space="preserve" text-anchor="middle" x="167.45" y="-965.35" font-family="Times,serif" font-size="14.00">bakiye = 5000</text>
+<text xml:space="preserve" text-anchor="middle" x="167.45" y="-948.55" font-family="Times,serif" font-size="14.00">limit = 2000</text>
+<text xml:space="preserve" text-anchor="middle" x="167.45" y="-931.75" font-family="Times,serif" font-size="14.00">günlük_çekilen = 0</text>
+<text xml:space="preserve" text-anchor="middle" x="167.45" y="-914.95" font-family="Times,serif" font-size="14.00">hak = 3</text>
+</g>
+<!-- Start&#45;&gt;SetVars -->
+<g id="edge1" class="edge">
+<title>Start-&gt;SetVars</title>
+<path fill="none" stroke="black" d="M167.45,-1035.51C167.45,-1028.26 167.45,-1019.38 167.45,-1010.17"/>
+<polygon fill="black" stroke="black" points="170.95,-1010.38 167.45,-1000.38 163.95,-1010.38 170.95,-1010.38"/>
+</g>
+<!-- CheckPIN -->
+<g id="node3" class="node">
+<title>CheckPIN</title>
+<path fill="none" stroke="black" d="M195.13,-869.75C195.13,-869.75 139.76,-869.75 139.76,-869.75 133.76,-869.75 127.76,-863.75 127.76,-857.75 127.76,-857.75 127.76,-840.15 127.76,-840.15 127.76,-834.15 133.76,-828.15 139.76,-828.15 139.76,-828.15 195.13,-828.15 195.13,-828.15 201.13,-828.15 207.13,-834.15 207.13,-840.15 207.13,-840.15 207.13,-857.75 207.13,-857.75 207.13,-863.75 201.13,-869.75 195.13,-869.75"/>
+<text xml:space="preserve" text-anchor="middle" x="167.45" y="-853.15" font-family="Times,serif" font-size="14.00">PIN gir</text>
+<text xml:space="preserve" text-anchor="middle" x="167.45" y="-836.35" font-family="Times,serif" font-size="14.00">Doğru mu?</text>
+</g>
+<!-- SetVars&#45;&gt;CheckPIN -->
+<g id="edge2" class="edge">
+<title>SetVars-&gt;CheckPIN</title>
+<path fill="none" stroke="black" d="M167.45,-906.51C167.45,-898.04 167.45,-889.37 167.45,-881.44"/>
+<polygon fill="black" stroke="black" points="170.95,-881.6 167.45,-871.6 163.95,-881.6 170.95,-881.6"/>
+</g>
+<!-- PinWrong -->
+<g id="node4" class="node">
+<title>PinWrong</title>
+<path fill="none" stroke="black" d="M142.44,-775.35C142.44,-775.35 76.45,-775.35 76.45,-775.35 70.45,-775.35 64.45,-769.35 64.45,-763.35 64.45,-763.35 64.45,-745.75 64.45,-745.75 64.45,-739.75 70.45,-733.75 76.45,-733.75 76.45,-733.75 142.44,-733.75 142.44,-733.75 148.44,-733.75 154.44,-739.75 154.44,-745.75 154.44,-745.75 154.44,-763.35 154.44,-763.35 154.44,-769.35 148.44,-775.35 142.44,-775.35"/>
+<text xml:space="preserve" text-anchor="middle" x="109.45" y="-758.75" font-family="Times,serif" font-size="14.00">Hatalı PIN</text>
+<text xml:space="preserve" text-anchor="middle" x="109.45" y="-741.95" font-family="Times,serif" font-size="14.00">hak = hak - 1</text>
+</g>
+<!-- CheckPIN&#45;&gt;PinWrong -->
+<g id="edge4" class="edge">
+<title>CheckPIN-&gt;PinWrong</title>
+<path fill="none" stroke="black" d="M127.53,-828.84C120.7,-823.74 114.52,-817.54 110.46,-810.15 106.63,-803.17 105.2,-794.89 105.02,-786.92"/>
+<polygon fill="black" stroke="black" points="108.5,-787.3 105.43,-777.16 101.51,-787 108.5,-787.3"/>
+<text xml:space="preserve" text-anchor="middle" x="127.95" y="-797.55" font-family="Times,serif" font-size="14.00">Hayır</text>
+</g>
+<!-- AskAmount -->
+<g id="node6" class="node">
+<title>AskAmount</title>
+<path fill="none" stroke="black" d="M307.13,-772.55C307.13,-772.55 265.76,-772.55 265.76,-772.55 259.76,-772.55 253.76,-766.55 253.76,-760.55 253.76,-760.55 253.76,-748.55 253.76,-748.55 253.76,-742.55 259.76,-736.55 265.76,-736.55 265.76,-736.55 307.13,-736.55 307.13,-736.55 313.13,-736.55 319.13,-742.55 319.13,-748.55 319.13,-748.55 319.13,-760.55 319.13,-760.55 319.13,-766.55 313.13,-772.55 307.13,-772.55"/>
+<text xml:space="preserve" text-anchor="middle" x="286.45" y="-750.35" font-family="Times,serif" font-size="14.00">Tutar gir</text>
+</g>
+<!-- CheckPIN&#45;&gt;AskAmount -->
+<g id="edge3" class="edge">
+<title>CheckPIN-&gt;AskAmount</title>
+<path fill="none" stroke="black" d="M193.56,-827.67C211.67,-813.61 235.88,-794.81 255.04,-779.93"/>
+<polygon fill="black" stroke="black" points="257.05,-782.81 262.8,-773.91 252.76,-777.28 257.05,-782.81"/>
+<text xml:space="preserve" text-anchor="middle" x="250.43" y="-797.55" font-family="Times,serif" font-size="14.00">Evet</text>
+</g>
+<!-- PinWrong&#45;&gt;CheckPIN -->
+<g id="edge5" class="edge">
+<title>PinWrong-&gt;CheckPIN</title>
+<path fill="none" stroke="black" d="M131.16,-775.54C136.28,-780.98 141.42,-787.1 145.45,-793.35 150.16,-800.68 154.18,-809.18 157.44,-817.26"/>
+<polygon fill="black" stroke="black" points="154.09,-818.31 160.87,-826.45 160.65,-815.86 154.09,-818.31"/>
+<text xml:space="preserve" text-anchor="middle" x="174.91" y="-797.55" font-family="Times,serif" font-size="14.00">hak &gt; 0</text>
+</g>
+<!-- Blocked -->
+<g id="node5" class="node">
+<title>Blocked</title>
+<ellipse fill="none" stroke="black" cx="77.45" cy="-603.5" rx="73.45" ry="73.45"/>
+<ellipse fill="none" stroke="black" cx="77.45" cy="-603.5" rx="77.45" ry="77.45"/>
+<text xml:space="preserve" text-anchor="middle" x="77.45" y="-607.7" font-family="Times,serif" font-size="14.00">Kart bloke oldu</text>
+<text xml:space="preserve" text-anchor="middle" x="77.45" y="-590.9" font-family="Times,serif" font-size="14.00">DUR</text>
+</g>
+<!-- PinWrong&#45;&gt;Blocked -->
+<g id="edge6" class="edge">
+<title>PinWrong-&gt;Blocked</title>
+<path fill="none" stroke="black" d="M105.13,-733.45C102.66,-721.96 99.38,-706.67 95.94,-690.65"/>
+<polygon fill="black" stroke="black" points="99.38,-690 93.86,-680.95 92.54,-691.47 99.38,-690"/>
+<text xml:space="preserve" text-anchor="middle" x="121.92" y="-703.15" font-family="Times,serif" font-size="14.00">hak = 0</text>
+</g>
+<!-- ModCheck -->
+<g id="node7" class="node">
+<title>ModCheck</title>
+<path fill="none" stroke="black" d="M266.26,-621.5C266.26,-621.5 184.64,-621.5 184.64,-621.5 178.64,-621.5 172.64,-615.5 172.64,-609.5 172.64,-609.5 172.64,-597.5 172.64,-597.5 172.64,-591.5 178.64,-585.5 184.64,-585.5 184.64,-585.5 266.26,-585.5 266.26,-585.5 272.26,-585.5 278.26,-591.5 278.26,-597.5 278.26,-597.5 278.26,-609.5 278.26,-609.5 278.26,-615.5 272.26,-621.5 266.26,-621.5"/>
+<text xml:space="preserve" text-anchor="middle" x="225.45" y="-599.3" font-family="Times,serif" font-size="14.00">20'nin katı mı?</text>
+</g>
+<!-- AskAmount&#45;&gt;ModCheck -->
+<g id="edge7" class="edge">
+<title>AskAmount-&gt;ModCheck</title>
+<path fill="none" stroke="black" d="M258.74,-736.34C251.69,-730.65 244.88,-723.7 240.45,-715.75 226.31,-690.38 223.55,-656.85 223.71,-633.26"/>
+<polygon fill="black" stroke="black" points="227.2,-633.52 223.97,-623.43 220.2,-633.34 227.2,-633.52"/>
+</g>
+<!-- ModCheck&#45;&gt;AskAmount -->
+<g id="edge8" class="edge">
+<title>ModCheck-&gt;AskAmount</title>
+<path fill="none" stroke="black" d="M230.71,-621.81C237.67,-643.98 250.79,-683.42 265.46,-715.75 267.01,-719.17 268.76,-722.69 270.56,-726.15"/>
+<polygon fill="black" stroke="black" points="267.44,-727.73 275.3,-734.83 273.58,-724.38 267.44,-727.73"/>
+<text xml:space="preserve" text-anchor="middle" x="282.95" y="-703.15" font-family="Times,serif" font-size="14.00">Hayır</text>
+</g>
+<!-- LimitCheck -->
+<g id="node8" class="node">
+<title>LimitCheck</title>
+<path fill="none" stroke="black" d="M345.86,-473.26C345.86,-473.26 201.04,-473.26 201.04,-473.26 195.04,-473.26 189.04,-467.26 189.04,-461.26 189.04,-461.26 189.04,-449.26 189.04,-449.26 189.04,-443.26 195.04,-437.26 201.04,-437.26 201.04,-437.26 345.86,-437.26 345.86,-437.26 351.86,-437.26 357.86,-443.26 357.86,-449.26 357.86,-449.26 357.86,-461.26 357.86,-461.26 357.86,-467.26 351.86,-473.26 345.86,-473.26"/>
+<text xml:space="preserve" text-anchor="middle" x="273.45" y="-451.06" font-family="Times,serif" font-size="14.00">Günlük limit aşılıyor mu?</text>
+</g>
+<!-- ModCheck&#45;&gt;LimitCheck -->
+<g id="edge9" class="edge">
+<title>ModCheck-&gt;LimitCheck</title>
+<path fill="none" stroke="black" d="M231.14,-585.15C239.3,-560.31 254.4,-514.3 264.17,-484.51"/>
+<polygon fill="black" stroke="black" points="267.49,-485.62 267.29,-475.02 260.84,-483.43 267.49,-485.62"/>
+<text xml:space="preserve" text-anchor="middle" x="274.67" y="-495.46" font-family="Times,serif" font-size="14.00">Evet</text>
+</g>
+<!-- LimitCheck&#45;&gt;AskAmount -->
+<g id="edge10" class="edge">
+<title>LimitCheck-&gt;AskAmount</title>
+<path fill="none" stroke="black" d="M284.16,-473.46C287.06,-478.95 289.84,-485.18 291.45,-491.26 315.12,-580.57 298.45,-606.58 300.45,-698.95 300.61,-706.42 301.76,-708.4 300.45,-715.75 299.87,-718.98 299.03,-722.29 298.05,-725.55"/>
+<polygon fill="black" stroke="black" points="294.82,-724.2 294.83,-734.79 301.43,-726.5 294.82,-724.2"/>
+<text xml:space="preserve" text-anchor="middle" x="325.69" y="-599.3" font-family="Times,serif" font-size="14.00">Aşıyor</text>
+</g>
+<!-- BakiyeCheck -->
+<g id="node9" class="node">
+<title>BakiyeCheck</title>
+<path fill="none" stroke="black" d="M407.67,-384.46C407.67,-384.46 279.23,-384.46 279.23,-384.46 273.23,-384.46 267.23,-378.46 267.23,-372.46 267.23,-372.46 267.23,-360.46 267.23,-360.46 267.23,-354.46 273.23,-348.46 279.23,-348.46 279.23,-348.46 407.67,-348.46 407.67,-348.46 413.67,-348.46 419.67,-354.46 419.67,-360.46 419.67,-360.46 419.67,-372.46 419.67,-372.46 419.67,-378.46 413.67,-384.46 407.67,-384.46"/>
+<text xml:space="preserve" text-anchor="middle" x="343.45" y="-362.26" font-family="Times,serif" font-size="14.00">Yetersiz bakiye var mı?</text>
+</g>
+<!-- LimitCheck&#45;&gt;BakiyeCheck -->
+<g id="edge11" class="edge">
+<title>LimitCheck-&gt;BakiyeCheck</title>
+<path fill="none" stroke="black" d="M287.28,-437.11C297.28,-424.71 310.97,-407.72 322.34,-393.63"/>
+<polygon fill="black" stroke="black" points="324.9,-396.03 328.46,-386.05 319.45,-391.63 324.9,-396.03"/>
+<text xml:space="preserve" text-anchor="middle" x="341.55" y="-406.66" font-family="Times,serif" font-size="14.00">Aşmıyor</text>
+</g>
+<!-- BakiyeCheck&#45;&gt;AskAmount -->
+<g id="edge12" class="edge">
+<title>BakiyeCheck-&gt;AskAmount</title>
+<path fill="none" stroke="black" d="M361.16,-384.91C365.34,-390.12 369.23,-396.14 371.45,-402.46 373.92,-409.5 371.73,-411.8 371.45,-419.26 367,-535.82 397.22,-573.66 351.45,-680.95 343.71,-699.08 329.56,-715.74 316.43,-728.52"/>
+<polygon fill="black" stroke="black" points="314.08,-725.92 309.14,-735.3 318.84,-731.05 314.08,-725.92"/>
+<text xml:space="preserve" text-anchor="middle" x="397.14" y="-495.46" font-family="Times,serif" font-size="14.00">Yetersiz</text>
+</g>
+<!-- Success -->
+<g id="node10" class="node">
+<title>Success</title>
+<path fill="none" stroke="black" d="M407.22,-295.66C407.22,-295.66 279.68,-295.66 279.68,-295.66 273.68,-295.66 267.68,-289.66 267.68,-283.66 267.68,-283.66 267.68,-249.26 267.68,-249.26 267.68,-243.26 273.68,-237.26 279.68,-237.26 279.68,-237.26 407.22,-237.26 407.22,-237.26 413.22,-237.26 419.22,-243.26 419.22,-249.26 419.22,-249.26 419.22,-283.66 419.22,-283.66 419.22,-289.66 413.22,-295.66 407.22,-295.66"/>
+<text xml:space="preserve" text-anchor="middle" x="343.45" y="-279.06" font-family="Times,serif" font-size="14.00">Para ver</text>
+<text xml:space="preserve" text-anchor="middle" x="343.45" y="-262.26" font-family="Times,serif" font-size="14.00">bakiye -= tutar</text>
+<text xml:space="preserve" text-anchor="middle" x="343.45" y="-245.46" font-family="Times,serif" font-size="14.00">günlük_çekilen += tutar</text>
+</g>
+<!-- BakiyeCheck&#45;&gt;Success -->
+<g id="edge13" class="edge">
+<title>BakiyeCheck-&gt;Success</title>
+<path fill="none" stroke="black" d="M343.45,-348.39C343.45,-336.96 343.45,-321.44 343.45,-307.04"/>
+<polygon fill="black" stroke="black" points="346.95,-307.35 343.45,-297.35 339.95,-307.35 346.95,-307.35"/>
+<text xml:space="preserve" text-anchor="middle" x="362.88" y="-317.86" font-family="Times,serif" font-size="14.00">Yeterli</text>
+</g>
+<!-- Again -->
+<g id="node11" class="node">
+<title>Again</title>
+<path fill="none" stroke="black" d="M448.58,-200.26C448.58,-200.26 342.31,-200.26 342.31,-200.26 336.31,-200.26 330.31,-194.26 330.31,-188.26 330.31,-188.26 330.31,-176.26 330.31,-176.26 330.31,-170.26 336.31,-164.26 342.31,-164.26 342.31,-164.26 448.58,-164.26 448.58,-164.26 454.58,-164.26 460.58,-170.26 460.58,-176.26 460.58,-176.26 460.58,-188.26 460.58,-188.26 460.58,-194.26 454.58,-200.26 448.58,-200.26"/>
+<text xml:space="preserve" text-anchor="middle" x="395.45" y="-178.06" font-family="Times,serif" font-size="14.00">Tekrar işlem? (E/H)</text>
+</g>
+<!-- Success&#45;&gt;Again -->
+<g id="edge14" class="edge">
+<title>Success-&gt;Again</title>
+<path fill="none" stroke="black" d="M361.34,-237.17C366.92,-228.36 373.04,-218.67 378.55,-209.97"/>
+<polygon fill="black" stroke="black" points="381.45,-211.92 383.84,-201.6 375.54,-208.18 381.45,-211.92"/>
+</g>
+<!-- Again&#45;&gt;AskAmount -->
+<g id="edge15" class="edge">
+<title>Again-&gt;AskAmount</title>
+<path fill="none" stroke="black" d="M414.51,-200.53C429.35,-215.94 447.45,-239.96 447.45,-265.46 447.45,-604.5 447.45,-604.5 447.45,-604.5 447.45,-668.78 377.5,-713.07 329.81,-735.81"/>
+<polygon fill="black" stroke="black" points="328.41,-732.6 320.79,-739.96 331.34,-738.96 328.41,-732.6"/>
+<text xml:space="preserve" text-anchor="middle" x="451.72" y="-406.66" font-family="Times,serif" font-size="14.00">E</text>
+</g>
+<!-- End -->
+<g id="node12" class="node">
+<title>End</title>
+<ellipse fill="none" stroke="black" cx="395.45" cy="-55.73" rx="51.73" ry="51.73"/>
+<ellipse fill="none" stroke="black" cx="395.45" cy="-55.73" rx="55.73" ry="55.73"/>
+<text xml:space="preserve" text-anchor="middle" x="395.45" y="-59.93" font-family="Times,serif" font-size="14.00">İyi günler</text>
+<text xml:space="preserve" text-anchor="middle" x="395.45" y="-43.13" font-family="Times,serif" font-size="14.00">DUR</text>
+</g>
+<!-- Again&#45;&gt;End -->
+<g id="edge16" class="edge">
+<title>Again-&gt;End</title>
+<path fill="none" stroke="black" d="M395.45,-163.94C395.45,-153.13 395.45,-138.45 395.45,-123.42"/>
+<polygon fill="black" stroke="black" points="398.95,-123.43 395.45,-113.43 391.95,-123.43 398.95,-123.43"/>
+<text xml:space="preserve" text-anchor="middle" x="400.5" y="-133.66" font-family="Times,serif" font-size="14.00">H</text>
+</g>
+</g>
+</svg>
